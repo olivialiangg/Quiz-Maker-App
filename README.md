@@ -15,5 +15,3 @@ on terms taught in my classes.
 - As a user, I want to be able to view the list of prompts in my quiz
 - As a user, I want to be able to remove a prompt from my quiz
 - As a user, I want to be able to see the number of prompts in my quiz
-
-  
