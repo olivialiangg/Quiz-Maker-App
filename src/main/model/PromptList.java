@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Represents a list of prompts
 public class PromptList {
@@ -13,34 +14,44 @@ public class PromptList {
         promptList = new ArrayList<>();
     }
 
-    //getters
+
+    //EFFECTS: return size of list
     public int getSize() {
         return promptList.size();
     }
 
-
+    // EFFECTS: produces true if promptList contain give p
+    public boolean containsPrompt(Prompt p) {
+        return promptList.contains(p);
+    }
 
 
     // MODIFIES: this
     // EFFECTS: adds a new prompt to list of prompts
     public void addPrompt(Prompt p) {
+        promptList.add(p);
     }
 
 
     // MODIFIES: this
     // EFFECTS: removes p from list; otherwise do nothing
     public void removePrompt(Prompt p) {
+        if (promptList.contains(p)) {
+            promptList.remove(p);
+        }
     }
 
+    // EFFECTS: returns number of prompts in list
+    public int totalPrompts() {
+        return promptList.size();
+    }
 
     // EFFECTS: returns String of all prompts in the list
     public String viewPrompts() {
+        for (Prompt p : promptList) {
+            return p.getQuestion() + " " + p.getAnswer();
+        }
         return "";
     }
-
-    // REQUIRES: list cannot be empty
-    // EFFECTS: returns number of prompts in list
-    public int totalPrompts() {
-        return 0;
-    }
 }
+

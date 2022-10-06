@@ -11,13 +11,14 @@ public class Prompt {
         this.answer = answer;
     }
 
-
     //getters
-    public String getQuestion() {
-        return question;
-    }
     public String getAnswer() {
         return answer;
     }
+
+    public String getQuestion() {
+        return question;
+    }
+
 }
 
