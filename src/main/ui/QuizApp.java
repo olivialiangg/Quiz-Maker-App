@@ -8,8 +8,6 @@ import java.util.Scanner;
 
 public class QuizApp {
     private PromptList promptList;
-    private String question;
-    private String answer;
     private Scanner input;
 
     // EFFECTS: runs the teller application
@@ -48,10 +46,10 @@ public class QuizApp {
             addAPrompt();
         } else if (command.equals("r")) {
             removeAPrompt();
-       // } else if (command.equals("t")) {
-       //     viewAllPrompts();
-        } else if (command.equals("v")) {
+        } else if (command.equals("t")) {
             viewNumberOfPrompts();
+        //} else if (command.equals("v")) {
+        //    viewAllPrompts();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -63,7 +61,7 @@ public class QuizApp {
     private void initialize() {
         promptList = new PromptList();
         input = new Scanner(System.in);
-        input.useDelimiter("\n");
+
     }
 
     // EFFECTS: displays menu of options to user
@@ -76,16 +74,16 @@ public class QuizApp {
         System.out.println("\tq -> quit");
     }
 
-    // MODIFIES: this
-    // EFFECTS: adds a new prompt
     private void addAPrompt() {
+        Scanner scan = new Scanner(System.in);
+
         System.out.println("\nProvide question:");
-        question = input.nextLine();
+        String question = scan.nextLine();
 
         System.out.println("\nProvide answer:");
-        answer = input.nextLine();
-        Prompt p = new Prompt(question, answer);
+        String answer = scan.nextLine();
 
+        Prompt p = new Prompt(question, answer);
         promptList.addPrompt(p);
     }
 
@@ -93,35 +91,33 @@ public class QuizApp {
     // MODIFIES: this
     // EFFECTS: removes given prompt
     private void removeAPrompt() {
-        System.out.println("\nProvide question:");
-        question = input.nextLine();
+        Scanner scan = new Scanner(System.in);
 
-        System.out.println("\nProvide answer:");
-        answer = input.nextLine();
+        System.out.println("\nProvide question to remove:");
+        String question = scan.nextLine();
+
+        System.out.println("\nProvide answer to remove:");
+        String answer = scan.nextLine();
+
         Prompt p = new Prompt(question, answer);
 
-        if (promptList.containsPrompt(p)) {
-            promptList.removePrompt(p);
-        }
+        promptList.removePrompt(p);
     }
+
 
     // EFFECTS: returns number of prompts in list
     private void viewNumberOfPrompts() {
-        System.out.println(promptList.getSize());
+        System.out.println("\nNumber of prompts in your quiz " + promptList.getSize() );
     }
-/*
-    //EFFECTS: prints all prompts in list
-    private void viewAllPrompts() {
-        if (promptList.getSize() > 0) {
-            for (Prompt p : promptList) {
-                System.out.println(p.getQuestion() + " " + p.getAnswer());
-            }
-        }
-        System.out.println("");
 
- */
+//
+//    //EFFECTS: prints out all prompts in list
+//    private void viewAllPrompts() {
+//    for (Prompt p: promptList) {
+//        System.out.println(viewAllPrompts(p));
+//        }
+//    }
 }
-
 
 
 

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 // Represents a list of prompts
@@ -46,12 +47,12 @@ public class PromptList {
         return promptList.size();
     }
 
+    // REQUIRES: for the list to not be empty
     // EFFECTS: returns String of all prompts in the list
-    public String viewPrompts() {
-        for (Prompt p : promptList) {
-            return p.getQuestion() + " " + p.getAnswer();
-        }
-        return "";
+    public String viewPrompts(Prompt p) {
+        return p.getQuestion() + " " + p.getAnswer();
     }
 }
+
+
 

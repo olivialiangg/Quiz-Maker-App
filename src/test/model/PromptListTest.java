@@ -68,17 +68,19 @@ class PromptListTest {
 
     }
 
+    /*
     @Test
     public void testViewPromptsNoPrompt() {
         assertEquals("", testPromptList.viewPrompts());
     }
 
+     */
+
+
     @Test
     public void testViewPromptsMultiplePrompt() {
-        testPromptList.addPrompt(p2);
-        testPromptList.addPrompt(p3);
-        assertEquals("What colour is chloroplast? Green Where is DNA stored in the cell? Nucleus",
-                testPromptList.viewPrompts());
+        assertEquals("What colour is chloroplast? Green",
+                testPromptList.viewPrompts(p2));
     }
 
     @Test
