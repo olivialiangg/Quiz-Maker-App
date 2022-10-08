@@ -4,6 +4,7 @@ package model;
 public class Prompt {
     private String question;
     private String answer;
+    private int orderNum;
 
     // EFFECTS: constructs a prompt with a question and answer
     public Prompt(String question, String answer) {
@@ -15,6 +16,7 @@ public class Prompt {
     public String getAnswer() {
         return answer;
     }
+
     public String getQuestion() {
         return question;
     }

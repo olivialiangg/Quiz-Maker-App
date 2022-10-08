@@ -9,11 +9,21 @@ public class PromptList {
 
     private ArrayList<Prompt> promptList;
 
-
     // EFFECTS: constructs a new list of prompts
     public PromptList() {
         promptList = new ArrayList<>();
     }
+
+
+
+
+    // EFFECTS: gets promptList; allows my QuizApp to have access to the promptList
+    public ArrayList<Prompt> getPromptList() {
+        return promptList;
+    }
+
+
+
 
 
     //EFFECTS: return size of list
@@ -21,16 +31,17 @@ public class PromptList {
         return promptList.size();
     }
 
-    // EFFECTS: produces true if promptList contain give p
-    public boolean containsPrompt(Prompt p) {
-        return promptList.contains(p);
-    }
-
 
     // MODIFIES: this
     // EFFECTS: adds a new prompt to list of prompts
     public void addPrompt(Prompt p) {
         promptList.add(p);
+    }
+
+
+    // EFFECTS: produces true if promptList contains p
+    public boolean containsPrompt(Prompt p) {
+        return promptList.contains(p);
     }
 
 
@@ -42,12 +53,12 @@ public class PromptList {
         }
     }
 
+
     // EFFECTS: returns number of prompts in list
     public int totalPrompts() {
         return promptList.size();
     }
 
-    // REQUIRES: for the list to not be empty
     // EFFECTS: returns String of all prompts in the list
     public String viewPrompts(Prompt p) {
         return p.getQuestion() + " " + p.getAnswer();

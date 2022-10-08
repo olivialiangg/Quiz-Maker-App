@@ -48,8 +48,8 @@ public class QuizApp {
             removeAPrompt();
         } else if (command.equals("t")) {
             viewNumberOfPrompts();
-        //} else if (command.equals("v")) {
-        //    viewAllPrompts();
+        } else if (command.equals("v")) {
+            viewAllPrompts();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -70,7 +70,7 @@ public class QuizApp {
         System.out.println("\ta -> add");
         System.out.println("\tr -> remove");
         System.out.println("\tt -> total");
-        //System.out.println("\tv -> view");
+        System.out.println("\tv -> view");
         System.out.println("\tq -> quit");
     }
 
@@ -86,7 +86,6 @@ public class QuizApp {
         Prompt p = new Prompt(question, answer);
         promptList.addPrompt(p);
     }
-
 
     // MODIFIES: this
     // EFFECTS: removes given prompt
@@ -104,19 +103,19 @@ public class QuizApp {
         promptList.removePrompt(p);
     }
 
-
     // EFFECTS: returns number of prompts in list
     private void viewNumberOfPrompts() {
-        System.out.println("\nNumber of prompts in your quiz " + promptList.getSize() );
+        System.out.println("\nNumber of prompts in your quiz: " + promptList.getSize());
     }
 
-//
-//    //EFFECTS: prints out all prompts in list
-//    private void viewAllPrompts() {
-//    for (Prompt p: promptList) {
-//        System.out.println(viewAllPrompts(p));
-//        }
-//    }
+
+    //EFFECTS: prints out all prompts in list
+    private void viewAllPrompts() {
+        for (Prompt p : promptList.getPromptList()) {
+            System.out.println(promptList.viewPrompts(p));
+        }
+    }
+
 }
 
 

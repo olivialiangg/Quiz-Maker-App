@@ -68,17 +68,8 @@ class PromptListTest {
 
     }
 
-    /*
     @Test
-    public void testViewPromptsNoPrompt() {
-        assertEquals("", testPromptList.viewPrompts());
-    }
-
-     */
-
-
-    @Test
-    public void testViewPromptsMultiplePrompt() {
+    public void testViewPrompt() {
         assertEquals("What colour is chloroplast? Green",
                 testPromptList.viewPrompts(p2));
     }
