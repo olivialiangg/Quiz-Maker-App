@@ -25,11 +25,17 @@ public class Prompt {
     // Used Java's generate equals() and hashCode()
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Prompt prompt = (Prompt) o;
         return Objects.equals(question, prompt.question) && Objects.equals(answer, prompt.answer);
     }
+
 
     @Override
     public int hashCode() {
