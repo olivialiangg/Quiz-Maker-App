@@ -10,7 +10,9 @@ public class QuizApp {
     private PromptList promptList;
     private Scanner input;
 
-    // EFFECTS: runs the teller application
+    // Used TellerApp.java to help me set up my runQuiz() processCommand(), initialize(), and displayMenu()
+
+    // EFFECTS: runs the quiz application
     public QuizApp() {
         runQuiz();
     }
@@ -28,14 +30,14 @@ public class QuizApp {
             command = input.next();
             command = command.toLowerCase();
 
-            if (command.equals("q")) {
+            if (command.equals("e")) {
                 keepGoing = false;
             } else {
                 processCommand(command);
             }
         }
 
-        System.out.println("\nGoodbye!");
+        System.out.println("\nEnd");
     }
 
 
@@ -67,55 +69,55 @@ public class QuizApp {
     // EFFECTS: displays menu of options to user
     private void displayMenu() {
         System.out.println("\nSelect from:");
-        System.out.println("\ta -> add");
-        System.out.println("\tr -> remove");
-        System.out.println("\tt -> total");
-        System.out.println("\tv -> view");
-        System.out.println("\tq -> quit");
+        System.out.println("\ta -> add a prompt");
+        System.out.println("\tr -> remove a prompt");
+        System.out.println("\tt -> total number of prompts");
+        System.out.println("\tv -> view all prompts");
+        System.out.println("\te -> exit");
     }
 
+    // MODIFIES: this
+    // EFFECTS: conducts prompt addition to list
     private void addAPrompt() {
-        Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nProvide question:");
-        String question = scan.nextLine();
+        String question = scanner.nextLine();
 
         System.out.println("\nProvide answer:");
-        String answer = scan.nextLine();
+        String answer = scanner.nextLine();
 
         Prompt p = new Prompt(question, answer);
         promptList.addPrompt(p);
     }
 
     // MODIFIES: this
-    // EFFECTS: removes given prompt
+    // EFFECTS: conducts prompt removal from list
     private void removeAPrompt() {
-        Scanner scan = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("\nProvide question to remove:");
-        String question = scan.nextLine();
+        String question = scanner.nextLine();
 
         System.out.println("\nProvide answer to remove:");
-        String answer = scan.nextLine();
+        String answer = scanner.nextLine();
 
         Prompt p = new Prompt(question, answer);
 
         promptList.removePrompt(p);
     }
 
-    // EFFECTS: returns number of prompts in list
+    // EFFECTS: prints number of prompts in list
     private void viewNumberOfPrompts() {
-        System.out.println("\nNumber of prompts in your quiz: " + promptList.getSize());
+        System.out.println("\nYou have " + promptList.getSize() + " questions and answers in your quiz");
     }
 
-
-    //EFFECTS: prints out all prompts in list
+    //EFFECTS: prints out all questions and answers in list
     private void viewAllPrompts() {
         for (Prompt p : promptList.getPromptList()) {
             System.out.println(promptList.viewPrompts(p));
         }
     }
-
 }
 
 

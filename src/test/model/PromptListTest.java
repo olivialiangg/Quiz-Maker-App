@@ -25,20 +25,29 @@ class PromptListTest {
         assertEquals(0, testPromptList.getSize());
     }
 
+
     @Test
-    public void testAddPrompt() {
+    public void testAddOnePrompt() {
         testPromptList.addPrompt(p1);
         assertEquals(1, testPromptList.getSize());
         assertTrue(testPromptList.containsPrompt(p1));
     }
 
     @Test
-    public void testAddMultiplePrompt() {
+    public void testAddMultiplePrompts() {
         testPromptList.addPrompt(p2);
         testPromptList.addPrompt(p3);
         assertEquals(2, testPromptList.getSize());
         assertTrue(testPromptList.containsPrompt(p2));
         assertTrue(testPromptList.containsPrompt(p3));
+    }
+
+    @Test
+    public void testAddSamePrompts() {
+        testPromptList.addPrompt(p2);
+        testPromptList.addPrompt(p2);
+        assertEquals(1, testPromptList.getSize());
+        assertTrue(testPromptList.containsPrompt(p2));
     }
 
     @Test
@@ -56,7 +65,7 @@ class PromptListTest {
     }
 
     @Test
-    public void testRemoveMultiplePrompt() {
+    public void testRemoveMultiplePrompts() {
         testPromptList.addPrompt(p1);
         testPromptList.addPrompt(p2);
         testPromptList.addPrompt(p3);
@@ -81,5 +90,4 @@ class PromptListTest {
         testPromptList.addPrompt(p3);
         assertEquals(3, testPromptList.totalPrompts());
     }
-
 }
