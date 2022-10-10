@@ -54,6 +54,16 @@ public class PromptList {
         return p.getQuestion() + " " + p.getAnswer();
     }
 
+    // EFFECTS: return number of hard prompts in list
+    public int totalHardPrompts() {
+        int count = 0;
+        for (Prompt p : promptList) {
+            if (p.getIsHard()) {
+                count++;
+            }
+        }
+        return count;
+    }
 }
 
 

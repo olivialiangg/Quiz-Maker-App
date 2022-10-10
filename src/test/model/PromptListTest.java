@@ -15,9 +15,9 @@ class PromptListTest {
     @BeforeEach
     public void setUp() {
         testPromptList = new PromptList();
-        p1 = new Prompt("What is the powerhouse of the cell?", "Mitochondria");
-        p2 = new Prompt("What colour is chloroplast?", "Green");
-        p3 = new Prompt("Where is DNA stored in the cell?", "Nucleus");
+        p1 = new Prompt("What is the powerhouse of the cell?", "Mitochondria", true);
+        p2 = new Prompt("What colour is chloroplast?", "Green", true);
+        p3 = new Prompt("Where is DNA stored in the cell?", "Nucleus", false);
     }
 
     @Test
@@ -89,5 +89,19 @@ class PromptListTest {
         testPromptList.addPrompt(p2);
         testPromptList.addPrompt(p3);
         assertEquals(3, testPromptList.totalPrompts());
+    }
+
+    @Test
+    public void testTotalNoHardPrompts() {
+        testPromptList.addPrompt(p3);
+        assertEquals(0, testPromptList.totalHardPrompts());
+    }
+
+    @Test
+    public void testTotalHardPrompts() {
+        testPromptList.addPrompt(p1);
+        testPromptList.addPrompt(p2);
+        testPromptList.addPrompt(p3);
+        assertEquals(2, testPromptList.totalHardPrompts());
     }
 }

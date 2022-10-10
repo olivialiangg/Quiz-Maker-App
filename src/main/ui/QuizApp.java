@@ -52,6 +52,8 @@ public class QuizApp {
             viewNumberOfPrompts();
         } else if (command.equals("v")) {
             viewAllPrompts();
+        } else if (command.equals("h")) {
+            viewNumberOfHardPrompts();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -73,6 +75,7 @@ public class QuizApp {
         System.out.println("\tr -> remove a prompt");
         System.out.println("\tt -> total number of prompts");
         System.out.println("\tv -> view all prompts");
+        System.out.println("\th -> total number of hard prompts");
         System.out.println("\te -> exit");
     }
 
@@ -87,7 +90,11 @@ public class QuizApp {
         System.out.println("\nProvide answer:");
         String answer = scanner.nextLine();
 
-        Prompt p = new Prompt(question, answer);
+        System.out.println("\nProvide true for hard or false for easy:");
+        Boolean hard = scanner.nextBoolean();
+
+
+        Prompt p = new Prompt(question, answer, hard);
         promptList.addPrompt(p);
     }
 
@@ -102,21 +109,28 @@ public class QuizApp {
         System.out.println("\nProvide answer to remove:");
         String answer = scanner.nextLine();
 
-        Prompt p = new Prompt(question, answer);
+        System.out.println("\nProvide true for hard or false for easy:");
+        Boolean hard = scanner.nextBoolean();
 
+        Prompt p = new Prompt(question, answer, hard);
         promptList.removePrompt(p);
     }
 
     // EFFECTS: prints number of prompts in list
     private void viewNumberOfPrompts() {
-        System.out.println("\nYou have " + promptList.getSize() + " questions and answers in your quiz");
+        System.out.println("\nYou have " + promptList.totalPrompts() + " questions and answers in your quiz");
     }
 
-    //EFFECTS: prints out all questions and answers in list
+    // EFFECTS: prints out all questions and answers in list
     private void viewAllPrompts() {
         for (Prompt p : promptList.getPromptList()) {
             System.out.println(promptList.viewPrompts(p));
         }
+    }
+
+    // EFFECTS: prints number of hard prompts in list
+    private void viewNumberOfHardPrompts() {
+        System.out.println("\nYou have " + promptList.totalHardPrompts() + " hard questions and answers in your quiz");
     }
 }
 
