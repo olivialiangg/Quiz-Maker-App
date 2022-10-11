@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PromptListTest {
@@ -84,6 +86,11 @@ class PromptListTest {
     }
 
     @Test
+    public void testTotalPromptsNoPrompts() {
+        assertEquals(0, testPromptList.totalPrompts());
+    }
+
+    @Test
     public void testTotalPrompts() {
         testPromptList.addPrompt(p1);
         testPromptList.addPrompt(p2);
@@ -103,5 +110,10 @@ class PromptListTest {
         testPromptList.addPrompt(p2);
         testPromptList.addPrompt(p3);
         assertEquals(2, testPromptList.totalHardPrompts());
+    }
+
+    @Test
+    public void testGetPromptList() {
+        assertEquals(testPromptList, testPromptList.getPromptList());
     }
 }

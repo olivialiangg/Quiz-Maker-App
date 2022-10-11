@@ -2,11 +2,11 @@ package model;
 
 import java.util.Objects;
 
-// Represents a prompt having a question and answer
+// Represents a prompt having a question and answer and a state of being either hard or easy
 public class Prompt {
     private String question;
     private String answer;
-    private boolean isHard;   // true means question hard
+    private boolean isHard;   // true means question it is a hard prompt
 
     // EFFECTS: constructs a prompt with a question and answer
     public Prompt(String question, String answer, Boolean isHard) {
@@ -28,9 +28,8 @@ public class Prompt {
         return isHard;
     }
 
+
     // Used Java's generate equals() and hashCode()
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

@@ -36,6 +36,7 @@ public class PromptList {
         }
     }
 
+    // REQUIRES: list of prompts cannot be empty
     // MODIFIES: this
     // EFFECTS: removes p from list is in the list; otherwise do nothing
     public void removePrompt(Prompt p) {
