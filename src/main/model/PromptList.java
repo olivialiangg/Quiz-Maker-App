@@ -18,15 +18,6 @@ public class PromptList {
         return promptList;
     }
 
-    //EFFECTS: returns size of list
-    public int getSize() {
-        return promptList.size();
-    }
-
-    //EFFECTS: produces true if given prompt is in prompt list
-    public boolean containsPrompt(Prompt p) {
-        return promptList.contains(p);
-    }
 
     // MODIFIES: this
     // EFFECTS: adds a new prompt to list of prompts that is not already in the list; otherwise do nothing

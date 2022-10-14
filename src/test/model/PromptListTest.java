@@ -23,47 +23,73 @@ class PromptListTest {
 
     @Test
     public void testConstructor() {
-        assertEquals(0, testPromptList.getSize());
+        List<Prompt> prompts = testPromptList.getPromptList();
+        assertEquals(0, prompts.size());
     }
 
+    @Test
+    public void testGetPromptListEmpty() {
+        List<Prompt> prompts = testPromptList.getPromptList();
+        assertEquals(0, prompts.size());
+    }
+
+    @Test
+    public void testGetPromptList() {
+        testPromptList.addPrompt(p1);
+        testPromptList.addPrompt(p2);
+
+        List<Prompt> prompts = testPromptList.getPromptList();
+
+        assertEquals(p1, prompts.get(0));
+        assertEquals(p2, prompts.get(1));
+    }
 
     @Test
     public void testAddOnePrompt() {
         testPromptList.addPrompt(p1);
+        List<Prompt> prompts = testPromptList.getPromptList();
 
-        assertEquals(1, testPromptList.getSize());
-        assertTrue(testPromptList.containsPrompt(p1));
+        assertEquals(1, prompts.size());
+        assertTrue(prompts.contains(p1));
     }
 
     @Test
     public void testAddMultiplePrompts() {
         testPromptList.addPrompt(p2);
         testPromptList.addPrompt(p3);
-        assertEquals(2, testPromptList.getSize());
-        assertTrue(testPromptList.containsPrompt(p2));
-        assertTrue(testPromptList.containsPrompt(p3));
+        List<Prompt> prompts = testPromptList.getPromptList();
+
+        assertEquals(2, prompts.size());
+        assertTrue(prompts.contains(p2));
+        assertTrue(prompts.contains(p3));
     }
 
     @Test
     public void testAddSamePrompts() {
         testPromptList.addPrompt(p2);
         testPromptList.addPrompt(p2);
-        assertEquals(1, testPromptList.getSize());
-        assertTrue(testPromptList.containsPrompt(p2));
+        List<Prompt> prompts = testPromptList.getPromptList();
+
+        assertEquals(1, prompts.size());
+        assertTrue(prompts.contains(p2));
     }
 
     @Test
     public void testRemoveNoPrompt() {
         testPromptList.addPrompt(p1);
         testPromptList.removePrompt(p2);
-        assertTrue(testPromptList.containsPrompt(p1));
+        List<Prompt> prompts = testPromptList.getPromptList();
+
+        assertTrue(prompts.contains(p1));
     }
 
     @Test
     public void testRemoveOnePrompt() {
         testPromptList.addPrompt(p1);
         testPromptList.removePrompt(p1);
-        assertEquals(0, testPromptList.getSize());
+        List<Prompt> prompts = testPromptList.getPromptList();
+
+        assertEquals(0, prompts.size());
     }
 
     @Test
@@ -73,9 +99,10 @@ class PromptListTest {
         testPromptList.addPrompt(p3);
         testPromptList.removePrompt(p2);
         testPromptList.removePrompt(p1);
+        List<Prompt> prompts = testPromptList.getPromptList();
 
-        assertTrue(testPromptList.containsPrompt(p3));
-        assertEquals(1, testPromptList.getSize());
+        assertTrue(prompts.contains(p3));
+        assertEquals(1, prompts.size());
 
     }
 
@@ -119,22 +146,5 @@ class PromptListTest {
         testPromptList.addPrompt(p2);
         testPromptList.addPrompt(p3);
         assertEquals(2, testPromptList.totalHardPrompts());
-    }
-
-    @Test
-    public void testGetPromptList() {
-        testPromptList.addPrompt(p1);
-        testPromptList.addPrompt(p2);
-
-        List<Prompt> list = testPromptList.getPromptList();
-
-        assertEquals(p1, list.get(0));
-        assertEquals(p2, list.get(1));
-    }
-
-    @Test
-    public void testGetPromptListEmpty() {
-        List<Prompt> list = testPromptList.getPromptList();
-        assertEquals(0, list.size());
     }
 }
