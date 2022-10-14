@@ -3,8 +3,7 @@ package model;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,6 +30,7 @@ class PromptListTest {
     @Test
     public void testAddOnePrompt() {
         testPromptList.addPrompt(p1);
+
         assertEquals(1, testPromptList.getSize());
         assertTrue(testPromptList.containsPrompt(p1));
     }
@@ -80,7 +80,7 @@ class PromptListTest {
     }
 
     @Test
-    public void testViewPrompt() {
+    public void testViewPrompts() {
         assertEquals("What colour is chloroplast? Green",
                 testPromptList.viewPrompts(p2));
     }
@@ -90,12 +90,21 @@ class PromptListTest {
         assertEquals(0, testPromptList.totalPrompts());
     }
 
+
     @Test
     public void testTotalPrompts() {
         testPromptList.addPrompt(p1);
         testPromptList.addPrompt(p2);
         testPromptList.addPrompt(p3);
         assertEquals(3, testPromptList.totalPrompts());
+    }
+
+    @Test
+    public void testTotalPromptsWithDuplicate() {
+        testPromptList.addPrompt(p1);
+        testPromptList.addPrompt(p2);
+        testPromptList.addPrompt(p2);
+        assertEquals(2, testPromptList.totalPrompts());
     }
 
     @Test
@@ -114,6 +123,18 @@ class PromptListTest {
 
     @Test
     public void testGetPromptList() {
-        assertEquals(testPromptList, testPromptList.getPromptList());
+        testPromptList.addPrompt(p1);
+        testPromptList.addPrompt(p2);
+
+        List<Prompt> list = testPromptList.getPromptList();
+
+        assertEquals(p1, list.get(0));
+        assertEquals(p2, list.get(1));
+    }
+
+    @Test
+    public void testGetPromptListEmpty() {
+        List<Prompt> list = testPromptList.getPromptList();
+        assertEquals(0, list.size());
     }
 }

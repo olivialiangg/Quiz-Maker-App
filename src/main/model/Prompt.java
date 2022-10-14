@@ -2,11 +2,11 @@ package model;
 
 import java.util.Objects;
 
-// Represents a prompt having a question and answer and a state of being either hard or easy
+// Represents a prompt having a question and answer and a state of being either hard or not hard
 public class Prompt {
     private String question;
     private String answer;
-    private boolean isHard;   // true means question it is a hard prompt
+    private boolean isHard;   // true means the prompt is hard
 
     // EFFECTS: constructs a prompt with a question and answer
     public Prompt(String question, String answer, Boolean isHard) {

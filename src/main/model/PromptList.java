@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
+
 // Represents a list of prompts
 public class PromptList {
 
@@ -12,13 +13,12 @@ public class PromptList {
         promptList = new ArrayList<>();
     }
 
-
-    // EFFECTS: return prompt list; allows QuizApp to have access to prompt list
+    // EFFECTS: returns prompt list
     public ArrayList<Prompt> getPromptList() {
         return promptList;
     }
 
-    //EFFECTS: return size of list
+    //EFFECTS: returns size of list
     public int getSize() {
         return promptList.size();
     }
@@ -29,7 +29,7 @@ public class PromptList {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds a new prompt to list of prompts that is not already in the list/ otherwise do nothing
+    // EFFECTS: adds a new prompt to list of prompts that is not already in the list; otherwise do nothing
     public void addPrompt(Prompt p) {
         if (!promptList.contains(p)) {
             promptList.add(p);
@@ -38,7 +38,7 @@ public class PromptList {
 
     // REQUIRES: list of prompts cannot be empty
     // MODIFIES: this
-    // EFFECTS: removes p from list is in the list; otherwise do nothing
+    // EFFECTS: removes given prompt from list if it is in the list of prompts; otherwise do nothing
     public void removePrompt(Prompt p) {
         if (promptList.contains(p)) {
             promptList.remove(p);

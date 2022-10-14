@@ -3,11 +3,10 @@
 ## Quiz Application
 
 
-This **Quiz Application** will allow users to enter questions with corresponding answers (*prompt*) into a quiz.
-Users will then be able to test themselves by providing the correct answer to the given/displayed question. 
-This quiz application can be used for those who want to test themselves on a certain topic or memorize definitions. 
-This project interests me because this application would be very useful in helping me memorize/test myself 
-on terms taught in my classes.
+This **Quiz Application** will allow users to enter questions with corresponding answers and their level of difficulty
+(*prompt*) into a quiz. This quiz application can be used for those who want to test themselves on a certain topic or
+memorize definitions. This project interests me because this application would be very useful in helping me 
+memorize/test myself on terms taught in my classes.
 
 ## User Stories
 
