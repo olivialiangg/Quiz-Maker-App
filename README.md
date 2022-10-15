@@ -4,9 +4,10 @@
 
 
 This **Quiz Application** will allow users to enter questions with corresponding answers and their level of difficulty
-(*prompt*) into a quiz. This quiz application can be used for those who want to test themselves on a certain topic or
-memorize definitions. This project interests me because this application would be very useful in helping me 
-memorize/test myself on terms taught in my classes.
+(*prompt*) into a quiz. Users will also be able to add or remove their prompts and view all the prompts in the quiz.
+This quiz application can be used for people who want to test themselves on a certain topic or
+memorize definitions by making quizzes. This project interests me because this application would be very useful in 
+helping me test myself on terms/concepts taught in my classes.
 
 ## User Stories
 
