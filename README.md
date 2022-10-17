@@ -1,13 +1,13 @@
 # My Personal Project
 
-## Quiz Application
+## Quiz Maker Application
 
 
-This **Quiz Application** will allow users to enter questions with corresponding answers and their level of difficulty
-(*prompt*) into a quiz. Users will also be able to add or remove their prompts and view all the prompts in the quiz.
-This quiz application can be used for people who want to test themselves on a certain topic or
-memorize definitions by making quizzes. This project interests me because this application would be very useful in 
-helping me test myself on terms/concepts taught in my classes.
+This **Quiz Maker Application** will allow users to make a quiz. Users can enter questions with corresponding answers 
+and their level of difficulty (*prompt*) into a quiz. Users will also be able to add or remove any of their prompts 
+from their quiz. All the questions and answer in the quiz can then be viewed. This quiz application can be used for 
+people who want to make quizzes themselves or for others on a certain topic. This project interests me because this 
+application would be very useful in helping me make test for myself on terms/concepts taught in my classes.
 
 ## User Stories
 
