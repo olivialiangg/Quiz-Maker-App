@@ -17,4 +17,4 @@ application would be very useful in helping me make test for myself on terms/con
 - As a user, I want to be able to see the number of prompts in my quiz
 - As a user, I want to be able to see the number of hard prompts in my quiz
 - As a user, I want to be able to save my quiz to file
-- As a user, I want to be able to to load my to-do list from file
+- As a user, I want to be able to load my to-do list from file
