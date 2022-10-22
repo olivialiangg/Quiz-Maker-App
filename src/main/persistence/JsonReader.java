@@ -50,7 +50,7 @@ public class JsonReader {
     // MODIFIES: this
     // EFFECTS: parses prompts from JSON object and adds them to workroom
     private void addPrompts(PromptList prompts, JSONObject jsonObject) {
-        JSONArray jsonArray = jsonObject.getJSONArray("prompts");
+        JSONArray jsonArray = jsonObject.getJSONArray("promptList");
         for (Object json : jsonArray) {
             JSONObject nextPrompt = (JSONObject) json;
             addPrompt(prompts, nextPrompt);
