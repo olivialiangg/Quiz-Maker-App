@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import java.io.*;
 
 // Modeled code from provided JsonSerializationDemo
-// Represents a writer that writes JSON representation of workroom to file
+// Represents a writer that writes JSON representation of prompt list to file
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -26,7 +26,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of prompt list to file
     public void write(PromptList prompts) {
         JSONObject json = prompts.toJason();
         saveToFile(json.toString(TAB));

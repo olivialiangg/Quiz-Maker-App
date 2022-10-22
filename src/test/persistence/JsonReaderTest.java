@@ -1,12 +1,9 @@
 package persistence;
 
-import model.Prompt;
 import model.PromptList;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +21,7 @@ class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderEmptyWorkRoom() {
+    void testReaderEmptyPromptList() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyWorkRoom.json");
         try {
             PromptList prompts = reader.read();
@@ -36,7 +33,7 @@ class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    void testReaderGeneralWorkRoom() {
+    void testReaderGeneralPromptList() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralWorkRoom.json");
         try {
             PromptList prompts = reader.read();

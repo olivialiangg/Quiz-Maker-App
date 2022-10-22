@@ -90,8 +90,8 @@ public class QuizApp {
         System.out.println("\tt -> total number of prompts");
         System.out.println("\tv -> view all prompts");
         System.out.println("\th -> total number of hard prompts");
-        System.out.println("\ts -> save work room to file");
-        System.out.println("\tl -> load work room from file");
+        System.out.println("\ts -> save prompt list to file");
+        System.out.println("\tl -> load prompt list from file");
         System.out.println("\te -> exit");
     }
 
@@ -163,7 +163,7 @@ public class QuizApp {
 
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads prompt list from file
     private void loadPromptList() {
         try {
             promptList = jsonReader.read();
