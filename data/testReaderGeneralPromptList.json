@@ -1,0 +1,15 @@
+{
+  "name": "Your quiz",
+  "promptList": [
+    {
+      "question": "What colour is chloroplast?",
+      "answer": "Green",
+      "isHard": true
+    },
+    {
+      "question": "What is the power house of the cell?",
+      "answer": "Mitochondria",
+      "isHard": false
+    }
+  ]
+}
