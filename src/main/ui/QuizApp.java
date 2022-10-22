@@ -2,18 +2,28 @@ package ui;
 
 import model.PromptList;
 import model.Prompt;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 
 public class QuizApp {
     private PromptList promptList;
     private Scanner input;
+    private static final String JSON_STORE = "./data/promptlist.json";
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // Used TellerApp.java to help me set up my runQuiz() processCommand(), initialize(), and displayMenu()
 
-    // EFFECTS: runs the quiz application
-    public QuizApp() {
+    // EFFECTS: runs the quiz application and throws FileNotFoundException {
+    public QuizApp() throws FileNotFoundException {
+        promptList = new PromptList("Your quiz");
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runQuiz();
     }
 
@@ -54,6 +64,10 @@ public class QuizApp {
             viewAllPrompts();
         } else if (command.equals("h")) {
             viewNumberOfHardPrompts();
+        } else if (command.equals("s")) {
+            savePromptList();
+        } else if (command.equals("l")) {
+            loadPromptList();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -63,7 +77,7 @@ public class QuizApp {
     // MODIFIES: this
     // EFFECTS: initializes prompt list
     private void initialize() {
-        promptList = new PromptList();
+        promptList = new PromptList("Your quiz");
         input = new Scanner(System.in);
 
     }
@@ -76,6 +90,8 @@ public class QuizApp {
         System.out.println("\tt -> total number of prompts");
         System.out.println("\tv -> view all prompts");
         System.out.println("\th -> total number of hard prompts");
+        System.out.println("\ts -> save work room to file");
+        System.out.println("\tl -> load work room from file");
         System.out.println("\te -> exit");
     }
 
@@ -132,7 +148,32 @@ public class QuizApp {
     private void viewNumberOfHardPrompts() {
         System.out.println("\nYou have " + promptList.totalHardPrompts() + " hard questions and answers in your quiz");
     }
+
+    // EFFECTS: saves the prompt list to file
+    private void savePromptList() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(promptList);
+            jsonWriter.close();
+            System.out.println("Saved " + promptList.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadPromptList() {
+        try {
+            promptList = jsonReader.read();
+            System.out.println("Loaded  " + promptList.getName() + "  from" + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
 }
+
 
 
 

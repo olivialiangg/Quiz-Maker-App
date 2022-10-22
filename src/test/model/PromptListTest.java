@@ -15,7 +15,7 @@ class PromptListTest {
 
     @BeforeEach
     public void setUp() {
-        testPromptList = new PromptList();
+        testPromptList = new PromptList("test");
         p1 = new Prompt("What is the powerhouse of the cell?", "Mitochondria", true);
         p2 = new Prompt("What colour is chloroplast?", "Green", true);
         p3 = new Prompt("Where is DNA stored in the cell?", "Nucleus", false);
@@ -25,6 +25,12 @@ class PromptListTest {
     public void testConstructor() {
         List<Prompt> prompts = testPromptList.getPromptList();
         assertEquals(0, prompts.size());
+        assertEquals("test", testPromptList.getName());
+    }
+
+    @Test
+    public void testGetName() {
+        assertEquals("test", testPromptList.getName());
     }
 
     @Test

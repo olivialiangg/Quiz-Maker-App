@@ -1,21 +1,32 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 
 // Represents a list of prompts
-public class PromptList {
+public class PromptList implements Writable {
 
     private ArrayList<Prompt> promptList;
+    private String name;
 
     // EFFECTS: constructs a new list of prompts
-    public PromptList() {
+    public PromptList(String name) {
         promptList = new ArrayList<>();
+        this.name = name;
     }
 
     // EFFECTS: returns prompt list
     public ArrayList<Prompt> getPromptList() {
         return promptList;
+    }
+
+    // EFFECTS: returns prompt list name
+    public String getName() {
+        return name;
     }
 
 
@@ -56,6 +67,26 @@ public class PromptList {
         }
         return count;
     }
+
+    @Override
+    public JSONObject toJason() {
+        JSONObject json = new JSONObject();
+        json.put("name", this.name);
+        json.put("promptList", promptListToJson());
+        return json;
+    }
+
+    // EFFECTS: returns prompts in this workroom as a JSON array
+    private JSONArray promptListToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Prompt p: promptList) {
+            jsonArray.put(p.toJason());
+        }
+
+        return jsonArray;
+    }
+
 }
 
 

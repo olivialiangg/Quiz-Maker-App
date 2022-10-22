@@ -1,9 +1,12 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.Objects;
 
 // Represents a prompt having a question and answer and a state of being either hard or not hard
-public class Prompt {
+public class Prompt implements Writable {
     private String question;
     private String answer;
     private boolean isHard;   // true means the prompt is hard
@@ -47,6 +50,15 @@ public class Prompt {
     @Override
     public int hashCode() {
         return Objects.hash(question, answer, isHard);
+    }
+
+    @Override
+    public JSONObject toJason() {
+        JSONObject json = new JSONObject();
+        json.put("question", question);
+        json.put("answer", answer);
+        json.put("isHard", isHard);
+        return json;
     }
 }
 
