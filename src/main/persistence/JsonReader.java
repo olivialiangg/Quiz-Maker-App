@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import org.json.*;
 
+// Modeled code from provided JsonSerializationDemo
 // Represents a reader that reads a list of prompts from JSON data stored in file
 public class JsonReader {
     private String source;
