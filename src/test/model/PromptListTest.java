@@ -153,4 +153,11 @@ class PromptListTest {
         testPromptList.addPrompt(p3);
         assertEquals(2, testPromptList.totalHardPrompts());
     }
+
+    @Test
+    void testHashCode() {
+        Prompt other = new Prompt("What is the powerhouse of the cell?", "Mitochondria", true);
+        assertEquals(p1.hashCode(), other.hashCode());
+    }
+
 }
