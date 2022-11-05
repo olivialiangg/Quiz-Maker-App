@@ -30,7 +30,6 @@ public class QuizPanel extends JFrame  {
 //        prompts = new PromptsPanel();
 //        button = new ButtonPanel();
 //
-//        this.add(title, BorderLayout.NORTH);
 //        this.add(button, BorderLayout.SOUTH);
 //        this.add(prompts, BorderLayout.CENTER);
 

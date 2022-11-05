@@ -13,27 +13,33 @@ public class ButtonPanel extends JPanel {
 
     public ButtonPanel() {
 
-        border = BorderFactory.createEmptyBorder();
-
-        this.setPreferredSize(new Dimension(300, 60));
+        this.setPreferredSize(new Dimension(300, 80));
         this.setBackground(Color.orange);
+
+        border = BorderFactory.createEmptyBorder();
 
         addPrompt = new JButton("Add prompt");
         addPrompt.setBorder(border);
-        addPrompt.setFont(new Font("Arial",Font.BOLD, 14));
+        addPrompt.setFont(new Font("Arial", Font.BOLD, 20));
+        this.add(addPrompt);
 
-
+        this.add((Box.createHorizontalStrut(15)));
         viewHardPrompts = new JButton("Hard prompts");
         viewHardPrompts.setBorder(border);
-        viewHardPrompts.setFont(new Font("Arial",Font.BOLD, 14));
+        viewHardPrompts.setFont(new Font("Arial", Font.BOLD, 20));
+        this.add(viewHardPrompts);
 
+        this.add((Box.createHorizontalStrut(15)));
         saveQuiz = new JButton("Save");
         saveQuiz.setBorder(border);
-        saveQuiz.setFont(new Font("Arial",Font.BOLD, 14));
+        saveQuiz.setFont(new Font("Arial", Font.BOLD, 20));
+        this.add(saveQuiz);
 
+        this.add((Box.createHorizontalStrut(15)));
         loadQuiz = new JButton("Load");
         loadQuiz.setBorder(border);
-        loadQuiz.setFont(new Font("Arial",Font.BOLD, 14));
+        loadQuiz.setFont(new Font("Arial", Font.BOLD, 20));
+        this.add(loadQuiz);
     }
 
     public JButton getAddPrompt() {
@@ -51,5 +57,4 @@ public class ButtonPanel extends JPanel {
     public JButton getLoadQuiz() {
         return loadQuiz;
     }
-
 }
