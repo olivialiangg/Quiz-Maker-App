@@ -24,7 +24,7 @@ public class ButtonPanel extends JPanel {
         this.add(addPrompt);
 
         this.add((Box.createHorizontalStrut(15)));
-        viewHardPrompts = new JButton("Hard prompts");
+        viewHardPrompts = new JButton("View hard prompts");
         viewHardPrompts.setBorder(border);
         viewHardPrompts.setFont(new Font("Arial", Font.BOLD, 20));
         this.add(viewHardPrompts);
