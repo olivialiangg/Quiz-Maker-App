@@ -3,10 +3,12 @@ package ui;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class ButtonPanel extends JPanel {
+public class ButtonPanel extends JPanel implements ActionListener {
     private JButton addPrompt;
-    private JButton viewHardPrompts;
+    private JButton removePrompt;
     private JButton saveQuiz;
     private JButton loadQuiz;
     private Border border;
@@ -21,13 +23,17 @@ public class ButtonPanel extends JPanel {
         addPrompt = new JButton("Add prompt");
         addPrompt.setBorder(border);
         addPrompt.setFont(new Font("Arial", Font.BOLD, 20));
+        addPrompt.addActionListener(this);
+        addPrompt.setActionCommand("Add prompt");
         this.add(addPrompt);
 
         this.add((Box.createHorizontalStrut(15)));
-        viewHardPrompts = new JButton("View hard prompts");
-        viewHardPrompts.setBorder(border);
-        viewHardPrompts.setFont(new Font("Arial", Font.BOLD, 20));
-        this.add(viewHardPrompts);
+        removePrompt = new JButton("View hard prompts");
+        removePrompt.setBorder(border);
+        removePrompt.setFont(new Font("Arial", Font.BOLD, 20));
+        removePrompt.addActionListener(this);
+        addPrompt.setActionCommand("Add prompt");
+        this.add(removePrompt);
 
         this.add((Box.createHorizontalStrut(15)));
         saveQuiz = new JButton("Save");
@@ -46,8 +52,8 @@ public class ButtonPanel extends JPanel {
         return addPrompt;
     }
 
-    public JButton getViewHardPrompts() {
-        return viewHardPrompts;
+    public JButton getRemovePrompt() {
+        return removePrompt;
     }
 
     public JButton getSaveQuiz() {
@@ -56,5 +62,11 @@ public class ButtonPanel extends JPanel {
 
     public JButton getLoadQuiz() {
         return loadQuiz;
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }

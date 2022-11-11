@@ -1,3 +1,4 @@
+/*
 package ui;
 
 import model.Prompt;
@@ -8,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class GUI extends JFrame implements ActionListener {
 
@@ -33,6 +36,8 @@ public class GUI extends JFrame implements ActionListener {
     private JLabel answer;
     private JLabel difficulty;
 
+    private String inputFile;
+    private String outputFile;
 
     public GUI() {
         super("Your Quiz");
@@ -120,6 +125,12 @@ public class GUI extends JFrame implements ActionListener {
         viewQuiz.setActionCommand("View your quiz");
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Remove a prompt")) {
             removePrompt();
@@ -195,20 +206,23 @@ public class GUI extends JFrame implements ActionListener {
     }
 
 
-    private void loadPrompts() throws IOException{
+    private void loadPrompts() throws IOException {
 
-        try {
-            database  = Reader.read(new File(CARLISTINGS_FILE));
-            listings.setText("<html><pre>Current Listings: \n" + cars.getListings() + "\n</pre></html>");
-            System.out.println("Listings loaded from file " + CARLISTINGS_FILE);
-        } catch (IOException e) {
-            quizPanel.setText("No Listings added yet");
-        } catch (IndexOutOfBoundsException e) {
-            quizPanel.setText("Please initialize listings file before proceeding");
-        }
+//        try {
+//            quiz = Reader.readPrompts(new File(CARLISTINGS_FILE));
+//            quizzes.setText("<html><pre>Current Quiz: \n" + prompts.getPromptList() + "\n</pre></html>");
+//            System.out.println("Listings loaded from file " + CARLISTINGS_FILE);
+//        } catch (IOException e) {
+//            quizzes.setText("No Listings added yet");
+//        } catch (IndexOutOfBoundsException e) {
+//            quizzes.setText("Please initialize listings file before proceeding");
+//        }
+
+        database = Files.readAllLines(Paths.get(inputFile));
+        if (data)
     }
 
-    private void savePrompts() throws IOException{
+    private void savePrompts() throws IOException {
         try {
             Writer writer = new Writer(new File(PROMPT_FILE));
             writer.write(prompts);
@@ -229,7 +243,13 @@ public class GUI extends JFrame implements ActionListener {
         quizPanel.setVisible(false);
     }
 
+
+
 }
+
+ */
+
+
 
 
 

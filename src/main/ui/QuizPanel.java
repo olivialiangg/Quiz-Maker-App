@@ -1,6 +1,7 @@
 package ui;
 
 import model.Prompt;
+import model.PromptList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,9 @@ public class QuizPanel extends JFrame {
     private int width;
     private int height;
 
+    private Prompt prompt;
+    private PromptList quiz;
+
     public QuizPanel() {
 
         width = 500;
@@ -40,7 +44,7 @@ public class QuizPanel extends JFrame {
         this.add(prompts, BorderLayout.CENTER);
 
         addPrompt = button.getAddPrompt();
-        viewHardPrompts = button.getViewHardPrompts();
+        viewHardPrompts = button.getRemovePrompt();
         saveQuiz = button.getSaveQuiz();
         loadQuiz = button.getLoadQuiz();
 
