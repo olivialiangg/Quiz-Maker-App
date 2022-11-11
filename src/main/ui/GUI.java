@@ -1,60 +1,61 @@
-/*
+
 package ui;
 
 import model.Prompt;
 import model.PromptList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class GUI extends JFrame implements ActionListener {
 
     private static final String PROMPT_FILE = "./data/promptlist.json";
-    private PromptList prompts;
+    private PromptList promptList;
     private Prompt prompt;
 
     private JPanel mainMenu;
+    private JButton addPromptButton;
     private JButton removePromptButton;
     private JButton saveQuizButton;
     private JButton loadQuizButton;
-    private JButton viewQuiz;
+    private JButton viewQuizButton;
 
-    private JPanel promptPanel;
-    private JLabel quizzes;
+    private JPanel promptsPanel; // carListingsPanel
+    private JLabel quizzes; //listings
 
-    private JPanel quizPage;
-    private JButton addPromptButton;
-    private JTextField t1;
-    private JTextField t2;
-    private JTextField t3;
+
+    private JPanel quizPage; //listingPage. shows all prompts added
+    private JTextField questionTextField;
+    private JTextField answerTextField;
+    private JTextField difficultyTextField;
     private JLabel question;
     private JLabel answer;
     private JLabel difficulty;
-
-    private String inputFile;
-    private String outputFile;
 
     public GUI() {
         super("Your Quiz");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(500, 700));
         initializeMenu();
-        initializeQuizPanel();
-        initializeMenuButtons();
+        currentQuizPanel(); //makeCarListingsPanel display current prompts
+        addPromptPanel(); //makeListYourCarPanel panel that pops up when u want to add a prompt
 
         JLabel welcomeLabel = new JLabel("Welcome to Your Quiz!");
         JLabel mainScreenImage = new JLabel();
         addLabel(welcomeLabel);
-        addImageToLabel(mainScreenImage);
+        //addImageToLabel(mainScreenImage);
 
-        addButtons(viewQuiz, removePromptButton, saveQuizButton, loadQuizButton);
+        initializeMenuButtons();
 
-        addButtonFunctionality();
+        addButtons(viewQuizButton, removePromptButton, saveQuizButton, loadQuizButton, addPromptButton);
+
+        addButtonFunctionality(); //addActionToButton
 
         mainMenu.setVisible(true);
     }
@@ -68,14 +69,14 @@ public class GUI extends JFrame implements ActionListener {
 
     public void initializeMenuButtons() {
         removePromptButton = new JButton("Remove a prompt");
-        saveQuizButton = new JButton("Save");
-        loadQuizButton = new JButton("Load");
-        viewQuiz = new JButton("View your quiz");
+        saveQuizButton = new JButton("Save Quiz");
+        loadQuizButton = new JButton("Load Quiz");
+        viewQuizButton = new JButton("View your current quiz");
     }
 
     public void addButton(JButton button, JPanel panel) {
-        button.setFont(new Font("Arial", Font.BOLD, 20));
-        button.setBackground(Color.orange);
+        button.setFont(new Font("Arial", Font.BOLD, 12));
+        button.setBackground(Color.white);
         panel.add(button);
         pack();
         setLocationRelativeTo(null);
@@ -83,18 +84,19 @@ public class GUI extends JFrame implements ActionListener {
         setResizable(false);
     }
 
-    public void addButtons(JButton button1, JButton button2, JButton button3, JButton button4) {
+    public void addButtons(JButton button1, JButton button2, JButton button3, JButton button4, JButton button5) {
         addButton(button1, mainMenu);
         addButton(button2, mainMenu);
         addButton(button3, mainMenu);
         addButton(button4, mainMenu);
+        addButton(button5, mainMenu);
 
     }
 
     public void addMenuButton(JButton button, JPanel panel) {
-        button.setFont(new Font("Arial", Font.BOLD, 20));
-        button.setBackground(Color.orange);
-        panel.add(button);
+        button.setFont(new Font("Arial", Font.BOLD, 12));
+        button.setBackground(Color.BLACK);
+        button.setForeground(Color.white);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -102,93 +104,98 @@ public class GUI extends JFrame implements ActionListener {
     }
 
     public void addLabel(JLabel j1) {
-        j1.setFont(new Font("ComicSans", Font.BOLD, 50));
+        j1.setFont(new Font("ComicSans", Font.BOLD, 30));
         mainMenu.add(j1);
     }
 
-    public void addImageToLabel(JLabel j1) {
-        j1.setIcon(new ImageIcon("./data/tobs.jpg"));
-        j1.setMinimumSize(new Dimension(20,20));
-        mainMenu.add(j1);
-    }
+//    public void addImageToLabel(JLabel j1) {
+//        j1.setIcon(new ImageIcon("./data/tobs.jpg"));
+//        j1.setMinimumSize(new Dimension(20,20));
+//        mainMenu.add(j1);
+//    }
 
 
     public void addButtonFunctionality() {
 
         removePromptButton.addActionListener(this);
-        removePromptButton.setActionCommand("Remove a prompt");
+        removePromptButton.setActionCommand("Remove");
         saveQuizButton.addActionListener(this);
-        saveQuizButton.setActionCommand("Save quiz");
+        saveQuizButton.setActionCommand("Save");
         loadQuizButton.addActionListener(this);
-        loadQuizButton.setActionCommand("Load quiz");
-        viewQuiz.addActionListener(this);
-        viewQuiz.setActionCommand("View your quiz");
+        loadQuizButton.setActionCommand("Load");
+        viewQuizButton.addActionListener(this);
+        viewQuizButton.setActionCommand("View");
+        addPromptButton.addActionListener(this);
+        addPromptButton.setActionCommand("Add");
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-    }
-
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Remove a prompt")) {
-            removePrompt();
-        } else if (e.getActionCommand().equals("Save quiz")) {
-            savePrompts();
-        } else if (e.getActionCommand().equals("Load quiz")) {
-            loadPrompts();
-        } else if (e.getActionCommand().equals("View your quiz")) {
-            initializeQuizPanel();
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getActionCommand().equals("View")) {
+            //displayImage()
+            initializePromptPanel();
+        } else if (ae.getActionCommand().equals("Remove")) {
+            //displayImage()
+            removePrompt(prompt);
+        } else if (ae.getActionCommand().equals("Save")) {
+            //saveQuiz();
+        } else if (ae.getActionCommand().equals("Load")) {
+            //loadQuiz();
+        } else if (ae.getActionCommand().equals("Add")) {
+            addPromptToQuiz();
+            addAPrompt();
+        } else if (ae.getActionCommand().equals(("Menu"))) {
+            returnToMainMenu();
         }
     }
 
-    public void makeAddAPromptPanel() {
-        promptPanel = new JPanel(new GridLayout(0, 2));
+    public void addPromptPanel() {
+
+        quizPage = new JPanel(new GridLayout(0, 2));
         JButton mainMenuButton = new JButton("Return to Main Menu");
-        mainMenuButton.setActionCommand("Return to Main Menu");
+        mainMenuButton.setActionCommand("Menu");
         mainMenuButton.addActionListener(this);
-        addMenuButton(mainMenuButton, promptPanel);
+        addMenuButton(mainMenuButton, quizPage);
 
         createPromptPage();
         addLabelToPrompts();
 
     }
 
-    public void initializeQuizPanel() {
-        add(promptPanel);
+    public void addPromptToQuiz() {
+        add(quizPage);
         quizPage.setVisible(true);
         mainMenu.setVisible(false);
-        promptPanel.setVisible(false);
+        promptsPanel.setVisible(false);
     }
+
 
     public void createPromptPage() {
         addPromptButton = new JButton("Add a prompt");
-        addPromptButton.setActionCommand("Add a prompt");
+        addPromptButton.setActionCommand("Add");
         addPromptButton.addActionListener(this);
 
         question = new JLabel("Enter question:");
-        t1 = new JTextField(10);
+        questionTextField = new JTextField(1);
 
         answer = new JLabel("Enter answer:");
-        t2 = new JTextField(10);
+        answerTextField = new JTextField(1);
 
         difficulty = new JLabel(("Enter true for hard and false for easy:"));
-        t3 = new JTextField(10);
+        difficultyTextField = new JTextField(1);
 
         labelStructure();
     }
 
 
     public void addLabelToPrompts() {
-        promptPanel.add(addPromptButton);
+        quizPage.add(addPromptButton);
 
-        promptPanel.add(question);
-        promptPanel.add(t1);
-        promptPanel.add(answer);
-        promptPanel.add(t2);
-        promptPanel.add(difficulty);
-        promptPanel.add(t3);
+        quizPage.add(question);
+        quizPage.add(questionTextField);
+        quizPage.add(answer);
+        quizPage.add(answerTextField);
+        quizPage.add(difficulty);
+        quizPage.add(difficultyTextField);
     }
 
     public void labelStructure() {
@@ -196,58 +203,67 @@ public class GUI extends JFrame implements ActionListener {
         addPromptButton.setForeground(Color.WHITE);
         addPromptButton.setFont(new Font("Arial", Font.BOLD, 12));
 
-        question.setFont(new Font("ComicSans", Font.BOLD, 24));
-        answer.setFont(new Font("ComicSans", Font.BOLD, 24));
-        difficulty.setFont(new Font("ComicSans", Font.BOLD, 24));
+        question.setFont(new Font("ComicSans", Font.BOLD, 15));
+        answer.setFont(new Font("ComicSans", Font.BOLD, 15));
+        difficulty.setFont(new Font("ComicSans", Font.BOLD, 15));
 
-        t1.setMaximumSize(new Dimension(1200, 400));
-        t2.setMaximumSize(new Dimension(1200, 400));
-        t3.setMaximumSize(new Dimension(1200, 400));
+        questionTextField.setMaximumSize(new Dimension(10, 5));
+        answerTextField.setMaximumSize(new Dimension(1200, 400));
+        difficultyTextField.setMaximumSize(new Dimension(1200, 400));
     }
 
 
-    private void loadPrompts() throws IOException {
-
-//        try {
-//            quiz = Reader.readPrompts(new File(CARLISTINGS_FILE));
-//            quizzes.setText("<html><pre>Current Quiz: \n" + prompts.getPromptList() + "\n</pre></html>");
-//            System.out.println("Listings loaded from file " + CARLISTINGS_FILE);
-//        } catch (IOException e) {
-//            quizzes.setText("No Listings added yet");
-//        } catch (IndexOutOfBoundsException e) {
-//            quizzes.setText("Please initialize listings file before proceeding");
-//        }
-
-        database = Files.readAllLines(Paths.get(inputFile));
-        if (data)
-    }
-
-    private void savePrompts() throws IOException {
+    public void addAPrompt() {
         try {
-            Writer writer = new Writer(new File(PROMPT_FILE));
-            writer.write(prompts);
-            writer.close();
-            System.out.println("Quiz saved to file " + PROMPT_FILE);
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to save Quiz to " + PROMPT_FILE);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
-            System.out.println("Please load the file before trying to save it");
+            prompt = new Prompt(questionTextField.getText(), answerTextField.getText(),
+                    Boolean.valueOf(difficultyTextField.getText()));
+            promptList.addPrompt(prompt);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input, please try again");
+        } catch (IndexOutOfBoundsException e) {
+            quizzes.setText("Please initialize quiz file before proceeding");
         }
+    }
+
+    public void removePrompt(Prompt p) {
+        try {
+            promptList.removePrompt(p);
+        } catch (NullPointerException e) {
+            System.out.println("Please add a car before attempting to remove it");
+        } catch (IndexOutOfBoundsException e) {
+            quizzes.setText("Please initialize quiz file before proceeding");
+        }
+    }
+
+    public void currentQuizPanel() {
+        promptsPanel = new JPanel(new GridLayout(2, 1));
+        JScrollPane scroll = new JScrollPane(quizzes, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        JButton mainMenuButton = new JButton("Return to Main Menu");
+        mainMenuButton.setActionCommand("Menu");
+        mainMenuButton.addActionListener(this);
+        addMenuButton(mainMenuButton, promptsPanel);
+    }
+
+    public void initializePromptPanel() {
+        add(promptsPanel);
+        promptsPanel.setVisible(true);
+        mainMenu.setVisible(false);
+        quizPage.setVisible(false);
     }
 
     public void returnToMainMenu() {
         mainMenu.setVisible(true);
-        promptPanel.setVisible(false);
-        quizPanel.setVisible(false);
+        promptsPanel.setVisible(false);
+        quizPage.setVisible(false);
     }
 
 
 
 }
 
- */
+
 
 
 
