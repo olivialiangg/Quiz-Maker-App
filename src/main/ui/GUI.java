@@ -97,6 +97,7 @@ public class GUI extends JFrame implements ActionListener {
         button.setFont(new Font("Arial", Font.BOLD, 12));
         button.setBackground(Color.BLACK);
         button.setForeground(Color.white);
+        panel.add(button);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -126,7 +127,7 @@ public class GUI extends JFrame implements ActionListener {
         viewQuizButton.addActionListener(this);
         viewQuizButton.setActionCommand("View");
         addPromptButton.addActionListener(this);
-        addPromptButton.setActionCommand("Add");
+        addPromptButton.setActionCommand("Create");
     }
 
     public void actionPerformed(ActionEvent ae) {
@@ -140,11 +141,12 @@ public class GUI extends JFrame implements ActionListener {
             //saveQuiz();
         } else if (ae.getActionCommand().equals("Load")) {
             //loadQuiz();
-        } else if (ae.getActionCommand().equals("Add")) {
+        } else if (ae.getActionCommand().equals("Create")) {
             addPromptToQuiz();
-            addAPrompt();
         } else if (ae.getActionCommand().equals(("Menu"))) {
             returnToMainMenu();
+        } else if (ae.getActionCommand().equals("Add")) {
+            addAPrompt();
         }
     }
 
@@ -170,9 +172,11 @@ public class GUI extends JFrame implements ActionListener {
 
 
     public void createPromptPage() {
+
         addPromptButton = new JButton("Add a prompt");
         addPromptButton.setActionCommand("Add");
         addPromptButton.addActionListener(this);
+
 
         question = new JLabel("Enter question:");
         questionTextField = new JTextField(1);
@@ -218,6 +222,7 @@ public class GUI extends JFrame implements ActionListener {
             prompt = new Prompt(questionTextField.getText(), answerTextField.getText(),
                     Boolean.valueOf(difficultyTextField.getText()));
             promptList.addPrompt(prompt);
+            quizzes.setText("<html><pre>Current Prompts: \n" + promptList.getPromptList() + "\n</pre></html>");
         } catch (NumberFormatException e) {
             System.out.println("Invalid input, please try again");
         } catch (IndexOutOfBoundsException e) {
