@@ -18,3 +18,11 @@ application would be very useful in helping me make test for myself on terms/con
 - As a user, I want to be able to see the number of hard prompts in my quiz
 - As a user, I want to be able to save my quiz to file
 - As a user, I want to be able to load my quiz from file
+
+
+## **Instructions for Grader**
+- You can generate the first required event related to adding Xs to a Y by
+- You can generate the second required event related to adding Xs to a Y by
+- You can locate my visual component by the splash screen image that is displayed before the application begins
+- You can save the state of my application by clicking the "Save Quiz" button
+- You can reload the state of my application by clicking the "Load Quiz" button

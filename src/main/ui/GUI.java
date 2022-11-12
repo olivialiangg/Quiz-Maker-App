@@ -2,6 +2,7 @@ package ui;
 
 import model.Prompt;
 import model.PromptList;
+import ui.SplashScreen;
 
 
 import javax.swing.*;
@@ -40,6 +41,7 @@ public class GUI extends JFrame implements ActionListener {
     private JLabel answer;
     private JLabel difficulty;
 
+
     public GUI() {
         super("Your Quiz");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -49,9 +51,7 @@ public class GUI extends JFrame implements ActionListener {
         addPromptPanel(); //makeListYourCarPanel panel that pops up when u want to add a prompt
 
         JLabel welcomeLabel = new JLabel("Welcome to Your Quiz!");
-        JLabel mainScreenImage = new JLabel();
         addLabel(welcomeLabel);
-        addImageToLabel(mainScreenImage);
 
         promptList = new PromptList("Your Quiz");
 
@@ -108,12 +108,6 @@ public class GUI extends JFrame implements ActionListener {
 
     public void addLabel(JLabel j1) {
         j1.setFont(new Font("ComicSans", Font.BOLD, 30));
-        mainMenu.add(j1);
-    }
-
-    public void addImageToLabel(JLabel j1) {
-        j1.setIcon(new ImageIcon("./data/tobs.jpg"));
-        j1.setMinimumSize(new Dimension(20,20));
         mainMenu.add(j1);
     }
 
