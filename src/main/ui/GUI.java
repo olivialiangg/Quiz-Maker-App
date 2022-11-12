@@ -1,17 +1,19 @@
-
 package ui;
 
 import model.Prompt;
 import model.PromptList;
-import persistence.JsonReader;
-import persistence.JsonWriter;
 
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 public class GUI extends JFrame implements ActionListener {
 
@@ -49,11 +51,13 @@ public class GUI extends JFrame implements ActionListener {
         JLabel welcomeLabel = new JLabel("Welcome to Your Quiz!");
         JLabel mainScreenImage = new JLabel();
         addLabel(welcomeLabel);
-        //addImageToLabel(mainScreenImage);
+        addImageToLabel(mainScreenImage);
+
+        promptList = new PromptList("Your Quiz");
 
         initializeMenuButtons();
 
-        addButtons(viewQuizButton, removePromptButton, saveQuizButton, loadQuizButton, addPromptButton);
+        addButtons(viewQuizButton, saveQuizButton, loadQuizButton);
 
         addButtonFunctionality(); //addActionToButton
 
@@ -84,12 +88,10 @@ public class GUI extends JFrame implements ActionListener {
         setResizable(false);
     }
 
-    public void addButtons(JButton button1, JButton button2, JButton button3, JButton button4, JButton button5) {
+    public void addButtons(JButton button1, JButton button2, JButton button3) {
         addButton(button1, mainMenu);
         addButton(button2, mainMenu);
         addButton(button3, mainMenu);
-        addButton(button4, mainMenu);
-        addButton(button5, mainMenu);
 
     }
 
@@ -109,11 +111,11 @@ public class GUI extends JFrame implements ActionListener {
         mainMenu.add(j1);
     }
 
-//    public void addImageToLabel(JLabel j1) {
-//        j1.setIcon(new ImageIcon("./data/tobs.jpg"));
-//        j1.setMinimumSize(new Dimension(20,20));
-//        mainMenu.add(j1);
-//    }
+    public void addImageToLabel(JLabel j1) {
+        j1.setIcon(new ImageIcon("./data/tobs.jpg"));
+        j1.setMinimumSize(new Dimension(20,20));
+        mainMenu.add(j1);
+    }
 
 
     public void addButtonFunctionality() {
@@ -126,21 +128,19 @@ public class GUI extends JFrame implements ActionListener {
         loadQuizButton.setActionCommand("Load");
         viewQuizButton.addActionListener(this);
         viewQuizButton.setActionCommand("View");
-        addPromptButton.addActionListener(this);
-        addPromptButton.setActionCommand("Create");
     }
 
     public void actionPerformed(ActionEvent ae) {
         if (ae.getActionCommand().equals("View")) {
             //displayImage()
-            initializePromptPanel();
+            initializeCarListingsPanel();
         } else if (ae.getActionCommand().equals("Remove")) {
             //displayImage()
             removePrompt(prompt);
         } else if (ae.getActionCommand().equals("Save")) {
-            //saveQuiz();
+            saveQuiz();
         } else if (ae.getActionCommand().equals("Load")) {
-            //loadQuiz();
+            loadQuiz();
         } else if (ae.getActionCommand().equals("Create")) {
             addPromptToQuiz();
         } else if (ae.getActionCommand().equals(("Menu"))) {
@@ -251,7 +251,7 @@ public class GUI extends JFrame implements ActionListener {
         addMenuButton(mainMenuButton, promptsPanel);
     }
 
-    public void initializePromptPanel() {
+    public void initializeCarListingsPanel() {
         add(promptsPanel);
         promptsPanel.setVisible(true);
         mainMenu.setVisible(false);
@@ -264,9 +264,24 @@ public class GUI extends JFrame implements ActionListener {
         quizPage.setVisible(false);
     }
 
+    public void saveQuiz() {
+        JsonWriter writer = new JsonWriter(PROMPT_FILE);
+        writer.write(promptList);
+        writer.close();
+        System.out.println("Your quiz was saved to file" + PROMPT_FILE);
+    }
 
-
+    public void loadQuiz() {
+        try {
+            JsonReader reader = new JsonReader(PROMPT_FILE);
+            promptList = reader.read();
+        } catch (IOException e) {
+            System.out.println("No prompts added yet");
+        }
+    }
 }
+
+
 
 
 

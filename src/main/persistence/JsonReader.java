@@ -49,7 +49,7 @@ public class JsonReader {
     }
 
     // MODIFIES: this
-    // EFFECTS: parses prompts from JSON object and adds them to workroom
+    // EFFECTS: parses prompts from JSON object and adds them to file
     private void addPrompts(PromptList prompts, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("promptList");
         for (Object json : jsonArray) {
@@ -59,7 +59,7 @@ public class JsonReader {
     }
 
     // MODIFIES: this
-    // EFFECTS: parses prompt from JSON object and adds it to workroom
+    // EFFECTS: parses prompt from JSON object and adds it to file
     private void addPrompt(PromptList prompts, JSONObject jsonObject) {
         String question = jsonObject.getString("question");
         String answer = jsonObject.getString("answer");
