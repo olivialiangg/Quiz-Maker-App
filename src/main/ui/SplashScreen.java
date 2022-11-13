@@ -19,6 +19,9 @@ public class SplashScreen extends JWindow {
 
 
     ActionListener al = new ActionListener() {
+
+        // MODIFIES: progressBar
+        // EFFECTS: constructs how long progress bar will take to run down
         @Override
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             progressBar.setValue(count);
@@ -30,6 +33,7 @@ public class SplashScreen extends JWindow {
         }
     };
 
+    // EFFECTS: sets up screen that image will be displayed on
     public SplashScreen() {
         Container container = getContentPane();
         setPreferredSize(new Dimension(800, 500));
@@ -49,11 +53,14 @@ public class SplashScreen extends JWindow {
         startProgressBar();
     }
 
+    // EFFECTS: constructs progress bar
     private void startProgressBar() {
         progressBarTimer = new Timer(TIMER_PAUSE, al);
         progressBarTimer.start();
     }
 
+    // MODIFIES: label
+    // EFFECTS: add an image to the label
     public void addImageToLabel(JLabel l) {
         l.setIcon(new ImageIcon("./data/splashscreen.jpg"));
         l.setMinimumSize(new Dimension(20,20));
