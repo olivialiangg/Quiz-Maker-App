@@ -35,6 +35,7 @@ public class SplashScreen extends JWindow {
 
     // EFFECTS: sets up screen that image will be displayed on
     public SplashScreen() {
+
         Container container = getContentPane();
         setPreferredSize(new Dimension(800, 500));
 
@@ -65,4 +66,5 @@ public class SplashScreen extends JWindow {
         l.setIcon(new ImageIcon("./data/splashscreen.jpg"));
         l.setMinimumSize(new Dimension(20,20));
     }
+
 }

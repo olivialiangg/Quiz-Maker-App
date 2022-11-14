@@ -14,9 +14,14 @@ public class GUI3 extends JPanel implements ListSelectionListener {
 
     private static final String addString = "Add";
     private static final String removeString = "Remove";
+    private static final String saveString = "Save";
+    private static final String loadString = "Load";
 
     private JButton removeButton;
     private JButton addButton;
+    private JButton saveButton;
+    private JButton loadButton;
+
     private JTextField question;
     private JTextField answer;
     private JTextField difficulty;
@@ -35,46 +40,44 @@ public class GUI3 extends JPanel implements ListSelectionListener {
 
         addButton = new JButton(addString);
         AddListener addListener = new AddListener(addButton);
-        addButton.setActionCommand(addString);
         addButton.addActionListener(addListener);
+        addButton.setActionCommand(addString);
         addButton.setEnabled(false);
+
+        initializeButtons();
+
+        question = new JTextField(10);
+        initializeTextField(question, addListener);
+
+        answer = new JTextField(10);
+        initializeTextField(answer, addListener);
+
+        difficulty = new JTextField(10);
+        initializeTextField(difficulty, addListener);
+
+
+        //Create a panel that uses BoxLayout.
+        JPanel buttonPane = new JPanel();
+        initializePanel(buttonPane);
+
+        add(listScrollPane, BorderLayout.CENTER);
+        add(buttonPane, BorderLayout.PAGE_END);
+
+    }
+
+    public void initializeButtons() {
 
         removeButton = new JButton(removeString);
         removeButton.setActionCommand(removeString);
         removeButton.addActionListener(new RemoveListener());
 
-        question = new JTextField(10);
-        question.addActionListener(addListener);
-        question.getDocument().addDocumentListener(addListener);
+        saveButton = new JButton(saveString);
+        saveButton.setActionCommand(saveString);
+//        saveButton.addActionListener(new SaveListener());
 
-        answer = new JTextField(10);
-        answer.addActionListener(addListener);
-        answer.getDocument().addDocumentListener(addListener);
-
-        difficulty = new JTextField(10);
-        difficulty.addActionListener(addListener);
-        answer.getDocument().addDocumentListener(addListener);
-
-
-        //Create a panel that uses BoxLayout.
-        JPanel buttonPane = new JPanel();
-        initializePanel();
-//        buttonPane.setLayout(new BoxLayout(buttonPane,
-//                BoxLayout.LINE_AXIS));
-//        buttonPane.add(removeButton);
-//        buttonPane.add(Box.createHorizontalStrut(5));
-//        buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
-//        buttonPane.add(Box.createHorizontalStrut(5));
-        buttonPane.add(question);
-        buttonPane.add(answer);
-        buttonPane.add(difficulty);
-        buttonPane.add(addButton);
-        buttonPane.add(removeButton);
-//        buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-        add(listScrollPane, BorderLayout.CENTER);
-        add(buttonPane, BorderLayout.PAGE_END);
-
+        loadButton = new JButton(loadString);
+        loadButton.setActionCommand(loadString);
+//        loadButton.addActionListener(new LoadListener());
     }
 
     public void initializeJList() {
@@ -86,14 +89,27 @@ public class GUI3 extends JPanel implements ListSelectionListener {
         list.setVisibleRowCount(20);
     }
 
-    public void initializePanel() {
-        JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new BoxLayout(buttonPane,
-                BoxLayout.LINE_AXIS));
-        buttonPane.add(Box.createHorizontalStrut(5));
-        buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
-        buttonPane.add(Box.createHorizontalStrut(5));
-        buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+    public void initializePanel(JPanel panel) {
+        panel.add(Box.createHorizontalStrut(5));
+        panel.add(new JSeparator(SwingConstants.VERTICAL));
+        panel.add(Box.createHorizontalStrut(5));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.add(question);
+        panel.add(answer);
+        panel.add(difficulty);
+        panel.add(addButton);
+        panel.add(removeButton);
+        panel.add(saveButton);
+        panel.add(loadButton);
+
+    }
+
+
+    public void initializeTextField(JTextField text, AddListener listener) {
+        text.addActionListener(listener);
+        text.getDocument().addDocumentListener(listener);
     }
 
 
@@ -101,7 +117,7 @@ public class GUI3 extends JPanel implements ListSelectionListener {
         public void actionPerformed(ActionEvent e) {
             //This method can be called only if
             //there's a valid selection
-            //so go ahead and remove whatever's selected.
+            //so go ahead and remove whatever is selected.
             int index = list.getSelectedIndex();
             listModel.remove(index);
 
@@ -122,11 +138,15 @@ public class GUI3 extends JPanel implements ListSelectionListener {
         }
     }
 
+    class SaveListeneer {
+
+    }
+
+
     //This listener is shared by the text field and the hire button.
     class AddListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private JButton button;
-        private int index;
 
         public AddListener(JButton button) {
             this.button = button;
