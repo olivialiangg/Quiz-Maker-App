@@ -35,25 +35,23 @@ public class SplashScreen extends JFrame {
 
     // EFFECTS: sets up screen that image will be displayed on
     public SplashScreen() {
-
-        setLocationRelativeTo(null);
-
-        Container container = getContentPane();
         setPreferredSize(new Dimension(800, 500));
 
         JPanel panel = new JPanel();
         panel.setBorder(new EtchedBorder());
-        container.add(panel, BorderLayout.CENTER);
+        add(panel, BorderLayout.CENTER);
 
         JLabel label = new JLabel();
         addImageToLabel(label);
         panel.add(label);
 
         progressBar.setMaximum(PROGBAR_MAX);
-        container.add(progressBar, BorderLayout.SOUTH);
+        add(progressBar, BorderLayout.SOUTH);
         pack();
         setVisible(true);
         startProgressBar();
+
+        setLocationRelativeTo(null);
     }
 
     // EFFECTS: constructs progress bar
