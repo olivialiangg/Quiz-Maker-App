@@ -1,21 +1,28 @@
 package ui;
 
 import model.Prompt;
+import model.PromptList;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.*;
 
 
-public class GUI3 extends JPanel implements ListSelectionListener {
+public class GUI3 extends JFrame implements ListSelectionListener {
     private JList list;
+    private PromptList prompts;
     private DefaultListModel listModel;
 
     private static final String addString = "Add";
     private static final String removeString = "Remove";
     private static final String saveString = "Save";
     private static final String loadString = "Load";
+
+    private static final String PROMPT_FILE = "./data/promptlist.json";
 
     private JButton removeButton;
     private JButton addButton;
@@ -26,34 +33,33 @@ public class GUI3 extends JPanel implements ListSelectionListener {
     private JTextField answer;
     private JTextField difficulty;
 
-    private Prompt examplePrompt;
 
     public GUI3() {
-        super(new BorderLayout());
+
+        super("Your Quiz");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setPreferredSize(new Dimension(500, 700));
+        pack();
+        setLocationRelativeTo(null);
 
         listModel = new DefaultListModel<Prompt>();
-        listModel.addElement("Example");
 
         initializeJList();
+
+        prompts = new PromptList("Your Quiz");
 
         JScrollPane listScrollPane = new JScrollPane(list);
 
         addButton = new JButton(addString);
         AddListener addListener = new AddListener(addButton);
         addButton.addActionListener(addListener);
-        addButton.setActionCommand(addString);
-        addButton.setEnabled(false);
 
         initializeButtons();
 
         question = new JTextField(10);
-        initializeTextField(question, addListener);
-
         answer = new JTextField(10);
-        initializeTextField(answer, addListener);
-
         difficulty = new JTextField(10);
-        initializeTextField(difficulty, addListener);
+        initializeTextField(question, answer, difficulty, addListener);
 
 
         //Create a panel that uses BoxLayout.
@@ -63,9 +69,14 @@ public class GUI3 extends JPanel implements ListSelectionListener {
         add(listScrollPane, BorderLayout.CENTER);
         add(buttonPane, BorderLayout.PAGE_END);
 
+        setVisible(true);
+
     }
 
     public void initializeButtons() {
+
+        addButton.setActionCommand(addString);
+        addButton.setEnabled(false);
 
         removeButton = new JButton(removeString);
         removeButton.setActionCommand(removeString);
@@ -73,11 +84,11 @@ public class GUI3 extends JPanel implements ListSelectionListener {
 
         saveButton = new JButton(saveString);
         saveButton.setActionCommand(saveString);
-//        saveButton.addActionListener(new SaveListener());
+        saveButton.addActionListener(new SaveListener());
 
         loadButton = new JButton(loadString);
         loadButton.setActionCommand(loadString);
-//        loadButton.addActionListener(new LoadListener());
+        loadButton.addActionListener(new LoadListener());
     }
 
     public void initializeJList() {
@@ -107,9 +118,37 @@ public class GUI3 extends JPanel implements ListSelectionListener {
     }
 
 
-    public void initializeTextField(JTextField text, AddListener listener) {
-        text.addActionListener(listener);
-        text.getDocument().addDocumentListener(listener);
+    public void initializeTextField(JTextField text1, JTextField text2, JTextField text3, AddListener listener) {
+        text1.addActionListener(listener);
+        text1.getDocument().addDocumentListener(listener);
+
+        text2.addActionListener(listener);
+        text2.getDocument().addDocumentListener(listener);
+
+        text3.addActionListener(listener);
+        text3.getDocument().addDocumentListener(listener);
+
+    }
+
+    class SaveListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            JsonWriter writer = new JsonWriter(PROMPT_FILE);
+            writer.write(prompts);
+            writer.close();
+        }
+    }
+
+    class LoadListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+            try {
+                JsonReader reader = new JsonReader(PROMPT_FILE);
+                prompts = reader.read();
+            } catch (IOException exception) {
+                System.out.println("No prompts added yet");
+            }
+        }
     }
 
 
@@ -138,15 +177,12 @@ public class GUI3 extends JPanel implements ListSelectionListener {
         }
     }
 
-    class SaveListeneer {
-
-    }
-
 
     //This listener is shared by the text field and the hire button.
     class AddListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private JButton button;
+        private String difficultylvl;
 
         public AddListener(JButton button) {
             this.button = button;
@@ -159,7 +195,7 @@ public class GUI3 extends JPanel implements ListSelectionListener {
             String userDifficulty = difficulty.getText();
 
             //User didn't type in a unique userQuestion...
-            if (userQuestion.equals("") && (userAnswer.equals("") && (userDifficulty.equals("")))) {
+            if (userQuestion.equals("") || (userAnswer.equals("") || (userDifficulty.equals("")))) {
                 Toolkit.getDefaultToolkit().beep();
                 question.requestFocusInWindow();
                 question.selectAll();
@@ -167,7 +203,6 @@ public class GUI3 extends JPanel implements ListSelectionListener {
                 answer.selectAll();
                 difficulty.requestFocusInWindow();
                 difficulty.selectAll();
-                return;
             }
 
             int index = list.getSelectedIndex(); //get selected index
@@ -177,12 +212,27 @@ public class GUI3 extends JPanel implements ListSelectionListener {
                 index++;
             }
 
-            listModel.insertElementAt(question.getText() + answer.getText() + difficulty.getText(), index);
+            getDifficulty(difficulty.getText());
+
+            listModel.insertElementAt(question.getText() + " " + answer.getText() + "  " + difficultylvl, index);
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
             resetTextField();
         }
 
+        // MODIFIES: difficultylvl
+        // EFFECT: sets difficultylvl to "hard" if user put true for difficulty
+        public void getDifficulty(String s) {
+
+            if (Boolean.valueOf(s)) {
+                difficultylvl = "hard";
+                System.out.println(Boolean.valueOf(s));
+            } else {
+                difficultylvl = "";
+            }
+        }
+
+        // EFFECTS: makes all text fields empty strings
         public void resetTextField() {
             question.requestFocusInWindow();
             question.setText("");
@@ -244,36 +294,4 @@ public class GUI3 extends JPanel implements ListSelectionListener {
         }
     }
 
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("Your Quiz");
-        frame.setSize(600, 800);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Create and set up the content pane.
-        JComponent newContentPane = new GUI3();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
-
-
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
 }
-

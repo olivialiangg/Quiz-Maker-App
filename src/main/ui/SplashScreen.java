@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 // formatted code from http://www.java2s.com/Tutorials/Java/Swing_How_to/JWindow/
 // Create_Swing_Splash_screen_with_progress_bar.htm
 
-public class SplashScreen extends JWindow {
+public class SplashScreen extends JFrame {
 
     private static JProgressBar progressBar = new JProgressBar();
     private int count = 1;
@@ -35,6 +35,8 @@ public class SplashScreen extends JWindow {
 
     // EFFECTS: sets up screen that image will be displayed on
     public SplashScreen() {
+
+        setLocationRelativeTo(null);
 
         Container container = getContentPane();
         setPreferredSize(new Dimension(800, 500));
