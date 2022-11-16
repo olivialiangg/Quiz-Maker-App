@@ -54,7 +54,7 @@ public class SplashScreen extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    // EFFECTS: constructs progress bar
+    // EFFECTS: constructs a progress bar
     private void startProgressBar() {
         progressBarTimer = new Timer(TIMER_PAUSE, al);
         progressBarTimer.start();
