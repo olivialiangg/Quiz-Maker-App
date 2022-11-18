@@ -21,9 +21,9 @@ application would be very useful in helping me make test for myself on terms/con
 
 
 ## **Instructions for Grader**
-- You can generate the first required event related to adding Xs to a Y by typing in your question , answer, and 
-difficulty level (false for easy or true for hard) to the text boxes and then clicking the "Add" button to add it to
-your quiz
+- You can generate the first required event related to adding Xs to a Y by typing in your question (left text field), 
+answer (middle text field), and difficulty level (false for easy or true for hard) to the right text field 
+and then clicking the "Add" button to add it to your quiz
 - You can generate the second required event related to adding Xs to a Y by clicking on prompt you would like to 
 remove from your quiz and then clicking the "Remove" button to remove it
 - You can locate my visual component by the splash screen image that is displayed before the application begins

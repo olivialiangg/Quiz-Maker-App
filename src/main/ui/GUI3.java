@@ -7,6 +7,7 @@ import persistence.JsonWriter;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -134,8 +135,10 @@ public class GUI3 extends JFrame implements ListSelectionListener {
 
         public void actionPerformed(ActionEvent e) {
             JsonWriter writer = new JsonWriter(PROMPT_FILE);
-            writer.write(prompts);
-            writer.close();
+            for (int i = 0; i < listModel.size(); i++) {
+//                writer.write(listModel.getElementAt(i));
+                writer.close();
+            }
         }
     }
 
@@ -145,8 +148,9 @@ public class GUI3 extends JFrame implements ListSelectionListener {
             try {
                 JsonReader reader = new JsonReader(PROMPT_FILE);
                 prompts = reader.read();
+
             } catch (IOException exception) {
-                System.out.println("No prompts added yet");
+                //
             }
         }
     }
