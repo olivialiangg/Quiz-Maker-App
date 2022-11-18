@@ -7,13 +7,13 @@ import persistence.JsonWriter;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.*;
 
 
-public class GUI3 extends JFrame implements ListSelectionListener {
+public class GUI extends JFrame implements ListSelectionListener {
     private JList list;
     private PromptList prompts;
     private DefaultListModel listModel;
@@ -23,7 +23,7 @@ public class GUI3 extends JFrame implements ListSelectionListener {
     private static final String saveString = "Save";
     private static final String loadString = "Load";
 
-    private static final String PROMPT_FILE = "./data/promptlist.json";
+    private static final String PROMPT_FILE = "./data/quiz.json";
 
     private JButton removeButton;
     private JButton addButton;
@@ -35,7 +35,7 @@ public class GUI3 extends JFrame implements ListSelectionListener {
     private JTextField difficulty;
 
 
-    public GUI3() {
+    public GUI() {
 
         super("Your Quiz");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -135,9 +135,12 @@ public class GUI3 extends JFrame implements ListSelectionListener {
 
         public void actionPerformed(ActionEvent e) {
             JsonWriter writer = new JsonWriter(PROMPT_FILE);
-            for (int i = 0; i < listModel.size(); i++) {
-//                writer.write(listModel.getElementAt(i));
+            try {
+                writer.open();
+                writer.write(prompts);
                 writer.close();
+            } catch (FileNotFoundException exception) {
+                //
             }
         }
     }
@@ -147,8 +150,7 @@ public class GUI3 extends JFrame implements ListSelectionListener {
         public void actionPerformed(ActionEvent e) {
             try {
                 JsonReader reader = new JsonReader(PROMPT_FILE);
-                prompts = reader.read();
-
+                reader.read();
             } catch (IOException exception) {
                 //
             }
@@ -200,7 +202,6 @@ public class GUI3 extends JFrame implements ListSelectionListener {
 
             //User didn't type in a unique userQuestion...
             if (userQuestion.equals("") || (userAnswer.equals("") || (userDifficulty.equals("")))) {
-                Toolkit.getDefaultToolkit().beep();
                 question.requestFocusInWindow();
                 question.selectAll();
                 answer.requestFocusInWindow();
@@ -221,6 +222,9 @@ public class GUI3 extends JFrame implements ListSelectionListener {
             listModel.insertElementAt(question.getText() + " " + answer.getText() + "  " + difficultylvl, index);
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
+
+            prompts.addPrompt(new Prompt(question.getText(), answer.getText(), Boolean.valueOf(difficulty.getText())));
+
             resetTextField();
         }
 

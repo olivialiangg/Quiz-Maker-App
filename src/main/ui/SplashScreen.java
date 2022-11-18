@@ -9,6 +9,10 @@ import javax.swing.JFrame;
 // formatted code from http://www.java2s.com/Tutorials/Java/Swing_How_to/JWindow/
 // Create_Swing_Splash_screen_with_progress_bar.htm
 
+// Image from https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.zieler.co.uk%2Flets-get-started-free-
+// art-classes%2F&psig=AOvVaw1QQPtrhBG9ctWAdORCK2U6&ust=1668882863179000&source=images&cd=vfe&ved=0CBAQjRxqFw
+// oTCKC0gaSvuPsCFQAAAAAdAAAAABAE
+
 public class SplashScreen extends JFrame {
 
     private static JProgressBar progressBar = new JProgressBar();
