@@ -24,8 +24,8 @@ application would be very useful in helping me make test for myself on terms/con
 - You can generate the first required event related to adding Xs to a Y by typing in your question (left text field), 
 answer (middle text field), and difficulty level (false for easy or true for hard) to the right text field 
 and then clicking the "Add" button to add it to your quiz
-- You can generate the second required event related to adding Xs to a Y by clicking on prompt you would like to 
-remove from your quiz and then clicking the "Remove" button to remove it
+- You can generate the second required event related to adding Xs to a Y by clicking the "Filter" button to view
+hard prompts only
 - You can locate my visual component by the splash screen image that is displayed before the application begins
 - You can save the state of my application by clicking the "Save Quiz" button
 - You can reload the state of my application by clicking the "Load Quiz" button

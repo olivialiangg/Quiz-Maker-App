@@ -9,11 +9,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
-import javax.lang.model.element.Element;
 import javax.swing.*;
 import javax.swing.event.*;
 
+// modeled code from https://docs.oracle.com/javase/tutorial/displayCode.html?code=https://docs.oracle.com/javase/
+// tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
 
 public class GUI extends JFrame implements ListSelectionListener {
     private JList list;
@@ -21,13 +21,13 @@ public class GUI extends JFrame implements ListSelectionListener {
     private DefaultListModel listModel;
 
     private static final String addString = "Add";
-    private static final String removeString = "Remove";
+    private static final String filterString = "Filter";
     private static final String saveString = "Save";
     private static final String loadString = "Load";
 
     private static final String PROMPT_FILE = "./data/promptlist.json";
 
-    private JButton removeButton;
+    private JButton filterButton;
     private JButton addButton;
     private JButton saveButton;
     private JButton loadButton;
@@ -51,7 +51,6 @@ public class GUI extends JFrame implements ListSelectionListener {
         prompts = new PromptList("Your Quiz");
 
         JScrollPane listScrollPane = new JScrollPane(list);
-
 
 
         addButton = new JButton(addString);
@@ -84,9 +83,9 @@ public class GUI extends JFrame implements ListSelectionListener {
         addButton.setActionCommand(addString);
         addButton.setEnabled(false);
 
-        removeButton = new JButton(removeString);
-        removeButton.setActionCommand(removeString);
-        removeButton.addActionListener(new RemoveListener());
+        filterButton = new JButton(filterString);
+        filterButton.setActionCommand(filterString);
+        filterButton.addActionListener(new FilterListener());
 
         saveButton = new JButton(saveString);
         saveButton.setActionCommand(saveString);
@@ -120,7 +119,7 @@ public class GUI extends JFrame implements ListSelectionListener {
         panel.add(answer);
         panel.add(difficulty);
         panel.add(addButton);
-        panel.add(removeButton);
+        panel.add(filterButton);
         panel.add(saveButton);
         panel.add(loadButton);
 
@@ -178,50 +177,23 @@ public class GUI extends JFrame implements ListSelectionListener {
     }
 
 
-    class RemoveListener implements ActionListener {
+    class FilterListener implements ActionListener {
+        private PromptList filteredList;
 
-        // MODIFIES: prompts
-        // EFFECTS: loads prompt list from file
+        // MODIFIES: listModel
+        // EFFECTS: only displays hard prompts
         public void actionPerformed(ActionEvent e) {
-            int index = list.getSelectedIndex();
-            System.out.println(listModel.getElementAt(index));
-
-            listModel.remove(index);
-            int size = listModel.getSize();
-
-            if (size == 0) { //Nobody's left, disable firing.
-                removeButton.setEnabled(false);
-
-            } else { //Select an index.
-                if (index == listModel.getSize()) {
-                    //removed item in last position
-                    index--;
+            filteredList = new PromptList("Your Filtered Quiz");
+            for (Prompt prompt : prompts.getPromptList()) {
+                if (prompt.getIsHard()) {
+                    filteredList.addPrompt(prompt);
                 }
 
-                list.setSelectedIndex(index);
-                list.ensureIndexIsVisible(index);
+                listModel.removeAllElements();
+                listModel.insertElementAt(filteredList.viewPrompts(prompt), 0);
             }
         }
     }
-
-//        public void actionPerformed(ActionEvent e) {
-//            String userQuestion = question.getText();
-//            String userAnswer = answer.getText();
-//            String userDifficulty = difficulty.getText();
-//
-//            if (userQuestion.equals("") || (userAnswer.equals("") || (userDifficulty.equals("")))) {
-//                question.requestFocusInWindow();
-//                question.selectAll();
-//                answer.requestFocusInWindow();
-//                answer.selectAll();
-//                difficulty.requestFocusInWindow();
-//                difficulty.selectAll();
-//            }
-//
-//            Prompt p = new Prompt(difficulty.getText(), answer.getText(), Boolean.valueOf(difficulty.getText()));
-//            prompts.removePrompt(p);
-//        }
-
 
 
     class AddListener implements ActionListener, DocumentListener {
@@ -291,30 +263,31 @@ public class GUI extends JFrame implements ListSelectionListener {
             difficulty.setText("");
         }
 
-
-
+        // EFFECTS: sets all text fields empty strings
         public void insertUpdate(DocumentEvent e) {
             enableButton();
         }
 
-
+        // EFFECTS: sets all text fields empty strings
         public void removeUpdate(DocumentEvent e) {
             handleEmptyTextField(e);
         }
 
-
+        // EFFECTS: enables button when text fields are not empty
         public void changedUpdate(DocumentEvent e) {
             if (!handleEmptyTextField(e)) {
                 enableButton();
             }
         }
 
+        // EFFECTS: sets button enable ability
         private void enableButton() {
             if (!alreadyEnabled) {
                 button.setEnabled(true);
             }
         }
 
+        // EFFECTS: only allows button to be enabled when there is text in text fields
         private boolean handleEmptyTextField(DocumentEvent e) {
             if (e.getDocument().getLength() <= 0) {
                 button.setEnabled(false);
@@ -325,19 +298,18 @@ public class GUI extends JFrame implements ListSelectionListener {
         }
     }
 
-    //This method is required by ListSelectionListener.
+    // EFFECTS: allows remove button to be enabled only when there are prompts available to remove
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
 
             if (list.getSelectedIndex() == -1) {
                 //No selection, disable fire button.
-                removeButton.setEnabled(false);
+                filterButton.setEnabled(false);
 
             } else {
                 //Selection, enable the fire button.
-                removeButton.setEnabled(true);
+                filterButton.setEnabled(true);
             }
         }
     }
-
 }
