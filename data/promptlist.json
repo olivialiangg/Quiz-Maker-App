@@ -1,2 +1,15 @@
 {
+    "name": "Your Quiz",
+    "promptList": [
+        {
+            "question": "hi",
+            "answer": "bye",
+            "isHard": true
+        },
+        {
+            "question": "t",
+            "answer": "d",
+            "isHard": false
+        }
+    ]
 }

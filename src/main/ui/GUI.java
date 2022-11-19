@@ -181,7 +181,7 @@ public class GUI extends JFrame implements ListSelectionListener {
         private PromptList filteredList;
 
         // MODIFIES: listModel
-        // EFFECTS: only displays hard prompts
+        // EFFECTS: only displays easy prompts
         public void actionPerformed(ActionEvent e) {
             filteredList = new PromptList("Your Filtered Quiz");
             for (Prompt prompt : prompts.getPromptList()) {
