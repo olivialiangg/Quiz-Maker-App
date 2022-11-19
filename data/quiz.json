@@ -1,8 +1,0 @@
-{
-    "name": "Your Quiz",
-    "promptList": [{
-        "question": "What is 2+2?",
-        "answer": "4",
-        "isHard": false
-    }]
-}

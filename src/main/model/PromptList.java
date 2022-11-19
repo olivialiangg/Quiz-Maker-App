@@ -57,6 +57,7 @@ public class PromptList implements Writable {
         return p.getQuestion() + " " + p.getAnswer();
     }
 
+
     // EFFECTS: return number of hard prompts in list
     public int totalHardPrompts() {
         int count = 0;
@@ -77,7 +78,7 @@ public class PromptList implements Writable {
     }
 
     // EFFECTS: returns prompts in this workroom as a JSON array
-    private JSONArray promptListToJson() {
+    public JSONArray promptListToJson() {
         JSONArray jsonArray = new JSONArray();
 
         for (Prompt p: promptList) {

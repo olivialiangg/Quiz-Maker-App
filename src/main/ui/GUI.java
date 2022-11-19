@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
+import javax.lang.model.element.Element;
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -23,7 +25,7 @@ public class GUI extends JFrame implements ListSelectionListener {
     private static final String saveString = "Save";
     private static final String loadString = "Load";
 
-    private static final String PROMPT_FILE = "./data/quiz.json";
+    private static final String PROMPT_FILE = "./data/promptlist.json";
 
     private JButton removeButton;
     private JButton addButton;
@@ -34,7 +36,7 @@ public class GUI extends JFrame implements ListSelectionListener {
     private JTextField answer;
     private JTextField difficulty;
 
-
+    // EFFECTS: sets up GUI
     public GUI() {
 
         super("Your Quiz");
@@ -46,14 +48,16 @@ public class GUI extends JFrame implements ListSelectionListener {
         listModel = new DefaultListModel<Prompt>();
 
         initializeJList();
-
         prompts = new PromptList("Your Quiz");
 
         JScrollPane listScrollPane = new JScrollPane(list);
 
+
+
         addButton = new JButton(addString);
         AddListener addListener = new AddListener(addButton);
         addButton.addActionListener(addListener);
+
 
         initializeButtons();
 
@@ -71,9 +75,10 @@ public class GUI extends JFrame implements ListSelectionListener {
         add(buttonPane, BorderLayout.PAGE_END);
 
         setVisible(true);
-
     }
 
+    // MODIFIES: addButton, removeButton, saveButton, loadButtons
+    // EFFECTS: sets name for buttons and its corresponding actions
     public void initializeButtons() {
 
         addButton.setActionCommand(addString);
@@ -92,6 +97,7 @@ public class GUI extends JFrame implements ListSelectionListener {
         loadButton.addActionListener(new LoadListener());
     }
 
+    // EFFECTS: create a jlist
     public void initializeJList() {
         //Create the list and put it in a scroll pane.
         list = new JList(listModel);
@@ -101,6 +107,8 @@ public class GUI extends JFrame implements ListSelectionListener {
         list.setVisibleRowCount(20);
     }
 
+
+    // EFFECTS: creates a panel with text fields
     public void initializePanel(JPanel panel) {
         panel.add(Box.createHorizontalStrut(5));
         panel.add(new JSeparator(SwingConstants.VERTICAL));
@@ -119,6 +127,7 @@ public class GUI extends JFrame implements ListSelectionListener {
     }
 
 
+    // EFFECTS: creates text fields and adds a listener for them
     public void initializeTextField(JTextField text1, JTextField text2, JTextField text3, AddListener listener) {
         text1.addActionListener(listener);
         text1.getDocument().addDocumentListener(listener);
@@ -133,6 +142,8 @@ public class GUI extends JFrame implements ListSelectionListener {
 
     class SaveListener implements ActionListener {
 
+
+        // EFFECTS: saves the prompt list to file
         public void actionPerformed(ActionEvent e) {
             JsonWriter writer = new JsonWriter(PROMPT_FILE);
             try {
@@ -140,32 +151,42 @@ public class GUI extends JFrame implements ListSelectionListener {
                 writer.write(prompts);
                 writer.close();
             } catch (FileNotFoundException exception) {
-                //
+                System.out.println("File not found.");
             }
         }
     }
 
+
     class LoadListener implements ActionListener {
 
+        // MODIFIES: prompts
+        // EFFECTS: loads prompt list from file
         public void actionPerformed(ActionEvent e) {
             try {
                 JsonReader reader = new JsonReader(PROMPT_FILE);
-                reader.read();
+                prompts = reader.read();
+
+                for (Prompt p : prompts.getPromptList()) {
+                    listModel.insertElementAt(prompts.viewPrompts(p), 0);
+                }
+
             } catch (IOException exception) {
-                //
+                System.out.println("Unable to read from file: " + PROMPT_FILE);
             }
         }
+
     }
 
 
     class RemoveListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            //This method can be called only if
-            //there's a valid selection
-            //so go ahead and remove whatever is selected.
-            int index = list.getSelectedIndex();
-            listModel.remove(index);
 
+        // MODIFIES: prompts
+        // EFFECTS: loads prompt list from file
+        public void actionPerformed(ActionEvent e) {
+            int index = list.getSelectedIndex();
+            System.out.println(listModel.getElementAt(index));
+
+            listModel.remove(index);
             int size = listModel.getSize();
 
             if (size == 0) { //Nobody's left, disable firing.
@@ -183,24 +204,44 @@ public class GUI extends JFrame implements ListSelectionListener {
         }
     }
 
+//        public void actionPerformed(ActionEvent e) {
+//            String userQuestion = question.getText();
+//            String userAnswer = answer.getText();
+//            String userDifficulty = difficulty.getText();
+//
+//            if (userQuestion.equals("") || (userAnswer.equals("") || (userDifficulty.equals("")))) {
+//                question.requestFocusInWindow();
+//                question.selectAll();
+//                answer.requestFocusInWindow();
+//                answer.selectAll();
+//                difficulty.requestFocusInWindow();
+//                difficulty.selectAll();
+//            }
+//
+//            Prompt p = new Prompt(difficulty.getText(), answer.getText(), Boolean.valueOf(difficulty.getText()));
+//            prompts.removePrompt(p);
+//        }
 
-    //This listener is shared by the text field and the hire button.
+
+
     class AddListener implements ActionListener, DocumentListener {
         private boolean alreadyEnabled = false;
         private JButton button;
         private String difficultylvl;
 
+        // MODIFIES: button
+        // EFFECTS: sets button to parameter button
         public AddListener(JButton button) {
             this.button = button;
         }
 
-        //Required by ActionListener.
+        // MODIFIES: prompts
+        // EFFECTS: adds inputted prompt from text field to prompts
         public void actionPerformed(ActionEvent e) {
             String userQuestion = question.getText();
             String userAnswer = answer.getText();
             String userDifficulty = difficulty.getText();
 
-            //User didn't type in a unique userQuestion...
             if (userQuestion.equals("") || (userAnswer.equals("") || (userDifficulty.equals("")))) {
                 question.requestFocusInWindow();
                 question.selectAll();
@@ -210,10 +251,10 @@ public class GUI extends JFrame implements ListSelectionListener {
                 difficulty.selectAll();
             }
 
-            int index = list.getSelectedIndex(); //get selected index
-            if (index == -1) { //no selection, so insert at beginning
+            int index = list.getSelectedIndex();
+            if (index == -1) {
                 index = 0;
-            } else {           //add after the selected item
+            } else {
                 index++;
             }
 
@@ -234,13 +275,13 @@ public class GUI extends JFrame implements ListSelectionListener {
 
             if (Boolean.valueOf(s)) {
                 difficultylvl = "hard";
-                System.out.println(Boolean.valueOf(s));
             } else {
                 difficultylvl = "";
             }
         }
 
-        // EFFECTS: makes all text fields empty strings
+        // MODIFIES: question, answer, difficulty
+        // EFFECTS: sets all text fields empty strings
         public void resetTextField() {
             question.requestFocusInWindow();
             question.setText("");
@@ -250,21 +291,18 @@ public class GUI extends JFrame implements ListSelectionListener {
             difficulty.setText("");
         }
 
-        //This method tests for string equality. You could certainly
-        //get more sophisticated about the algorithm.  For example,
-        //you might want to ignore white space and capitalization.
 
-        //Required by DocumentListener.
+
         public void insertUpdate(DocumentEvent e) {
             enableButton();
         }
 
-        //Required by DocumentListener.
+
         public void removeUpdate(DocumentEvent e) {
             handleEmptyTextField(e);
         }
 
-        //Required by DocumentListener.
+
         public void changedUpdate(DocumentEvent e) {
             if (!handleEmptyTextField(e)) {
                 enableButton();

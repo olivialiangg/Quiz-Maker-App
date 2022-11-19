@@ -1,19 +1,14 @@
 {
-    "name": "Your quiz",
+    "name": "Your Quiz",
     "promptList": [
         {
-            "question": "What colour is chloroplast?",
-            "answer": "Green",
+            "question": "a",
+            "answer": "b",
             "isHard": true
         },
         {
-            "question": "What is the power house of the cell?",
-            "answer": "Mitochondria",
-            "isHard": false
-        },
-        {
-            "question": "how long ago is 2020?",
-            "answer": "2 years",
+            "question": "hi",
+            "answer": "bye",
             "isHard": true
         }
     ]
