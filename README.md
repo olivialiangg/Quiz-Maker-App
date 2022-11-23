@@ -34,11 +34,11 @@ easy prompts only
 After adding two prompts, one that is hard (true) and another that is not hard (false), followed by filtering the
 prompts to only display the not hard prompts, the console printed this:
 
-Wed Nov 23 13:42:34 PST 2022
+Wed Nov 23 13:42:34 PST 2022 <br>
 Added prompt: What is 2+2? 4 true
 
-Wed Nov 23 13:42:40 PST 2022
+Wed Nov 23 13:42:40 PST 2022 <br>
 Added prompt: What is 1+1? 2 false
 
-Wed Nov 23 13:42:42 PST 2022
+Wed Nov 23 13:42:42 PST 2022 <br>
 Filtered list of prompts.
