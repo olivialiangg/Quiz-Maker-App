@@ -33,14 +33,16 @@ public class PromptList implements Writable {
     // MODIFIES: this
     // EFFECTS: adds a new prompt to list of prompts that is not already in the list; otherwise do nothing
     public void addPrompt(Prompt p) {
+
         if (!promptList.contains(p)) {
             promptList.add(p);
-            EventLog.getInstance().logEvent(new Event("Added prompt: " + p.getQuestion() + p.getAnswer()));
+            EventLog.getInstance().logEvent(new Event("Added prompt: "
+                    + p.getQuestion() + " " + p.getAnswer() + " " + p.getIsHard() + " "));
         }
     }
 
     public void filterPrompts() {
-        EventLog.getInstance().logEvent(new Event("Filtered the displayed prompts."));
+        EventLog.getInstance().logEvent(new Event("Filtered list of prompts. "));
     }
 
     // REQUIRES: list of prompts cannot be empty

@@ -39,6 +39,8 @@ public class GUI extends JFrame implements ListSelectionListener {
     private JTextField difficulty;
 
     private EventLog el;
+    private JsonWriter writer;
+    private JsonReader reader;
 
 
     // EFFECTS: sets up GUI
@@ -161,7 +163,7 @@ public class GUI extends JFrame implements ListSelectionListener {
             el = EventLog.getInstance();
             log = "";
             for (Event next: el) {
-                log = log + next.toString();
+                log = log + next.toString() + "\n\n";
             }
 
             System.out.println(log);
@@ -172,7 +174,7 @@ public class GUI extends JFrame implements ListSelectionListener {
 
         // EFFECTS: saves the prompt list to file
         public void actionPerformed(ActionEvent e) {
-            JsonWriter writer = new JsonWriter(PROMPT_FILE);
+            writer = new JsonWriter(PROMPT_FILE);
             try {
                 writer.open();
                 writer.write(prompts);
@@ -190,7 +192,7 @@ public class GUI extends JFrame implements ListSelectionListener {
         // EFFECTS: loads prompt list from file
         public void actionPerformed(ActionEvent e) {
             try {
-                JsonReader reader = new JsonReader(PROMPT_FILE);
+                reader = new JsonReader(PROMPT_FILE);
                 prompts = reader.read();
 
                 for (Prompt p : prompts.getPromptList()) {
