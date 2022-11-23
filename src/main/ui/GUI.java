@@ -211,15 +211,15 @@ public class GUI extends JFrame implements ListSelectionListener {
         // MODIFIES: listModel
         // EFFECTS: only displays easy prompts
         public void actionPerformed(ActionEvent e) {
+            prompts.filterPrompts();
             filteredList = new PromptList("Your Filtered Quiz");
             for (Prompt prompt : prompts.getPromptList()) {
-                if (prompt.getIsHard()) {
-                    filteredList.addPrompt(prompt);
+                if (!prompt.getIsHard()) {
+                    filteredList.removeGivenPrompt(prompt);
                 }
 
                 listModel.removeAllElements();
                 listModel.insertElementAt(filteredList.viewPrompts(prompt), 0);
-                prompts.filterPrompts();
             }
         }
     }

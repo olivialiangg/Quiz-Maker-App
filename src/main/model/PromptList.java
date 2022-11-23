@@ -39,6 +39,10 @@ public class PromptList implements Writable {
         }
     }
 
+    public void filterPrompts() {
+        EventLog.getInstance().logEvent(new Event("Filtered the displayed prompts."));
+    }
+
     // REQUIRES: list of prompts cannot be empty
     // MODIFIES: this
     // EFFECTS: removes given prompt from list if it is in the list of prompts; otherwise do nothing
@@ -46,6 +50,10 @@ public class PromptList implements Writable {
         if (promptList.contains(p)) {
             promptList.remove(p);
         }
+    }
+
+    public void removeGivenPrompt(Prompt p) {
+        promptList.remove(p);
     }
 
     // EFFECTS: returns number of prompts in list
@@ -69,22 +77,6 @@ public class PromptList implements Writable {
         }
         return count;
     }
-
-    public void filterPrompts() {
-        EventLog.getInstance().logEvent(new Event("Filtered the displayed prompts."));
-    }
-
-//    public PromptList filterPrompts(PromptList list) {
-//        PromptList filteredPromptsList = new PromptList("Your Filtered Quiz ");
-//
-//        for (Prompt prompt: list.getPromptList()) {
-//            if (prompt.getIsHard()) {
-//                filteredPromptsList.addPrompt(prompt);
-//            }
-//        }
-//
-//        return filteredPromptsList;
-//    }
 
     @Override
     public JSONObject toJason() {
