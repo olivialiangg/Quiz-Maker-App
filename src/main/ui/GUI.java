@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Prompt;
 import model.PromptList;
 import persistence.JsonReader;
@@ -24,6 +26,7 @@ public class GUI extends JFrame implements ListSelectionListener {
     private static final String filterString = "Filter";
     private static final String saveString = "Save";
     private static final String loadString = "Load";
+    private static final String exitString = "Exit";
 
     private static final String PROMPT_FILE = "./data/promptlist.json";
 
@@ -31,10 +34,13 @@ public class GUI extends JFrame implements ListSelectionListener {
     private JButton addButton;
     private JButton saveButton;
     private JButton loadButton;
+    private JButton exitButton;
 
     private JTextField question;
     private JTextField answer;
     private JTextField difficulty;
+
+    private LogPrinter lp;
 
     // EFFECTS: sets up GUI
     public GUI() {
@@ -74,6 +80,8 @@ public class GUI extends JFrame implements ListSelectionListener {
         add(buttonPane, BorderLayout.PAGE_END);
 
         setVisible(true);
+
+        EventLog.getInstance().iterator();
     }
 
     // MODIFIES: addButton, removeButton, saveButton, loadButtons
@@ -94,6 +102,10 @@ public class GUI extends JFrame implements ListSelectionListener {
         loadButton = new JButton(loadString);
         loadButton.setActionCommand(loadString);
         loadButton.addActionListener(new LoadListener());
+
+        exitButton = new JButton(exitString);
+        exitButton.setActionCommand(exitString);
+        exitButton.addActionListener(new ExitListener());
     }
 
     // EFFECTS: create a jlist
@@ -122,6 +134,7 @@ public class GUI extends JFrame implements ListSelectionListener {
         panel.add(filterButton);
         panel.add(saveButton);
         panel.add(loadButton);
+        panel.add(exitButton);
 
     }
 
@@ -139,8 +152,17 @@ public class GUI extends JFrame implements ListSelectionListener {
 
     }
 
-    class SaveListener implements ActionListener {
 
+    class ExitListener implements ActionListener {
+
+        // EFFECTS: quits application
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+            System.out.println(lp.printLog(EventLog.getInstance()));
+        }
+    }
+
+    class SaveListener implements ActionListener {
 
         // EFFECTS: saves the prompt list to file
         public void actionPerformed(ActionEvent e) {
@@ -191,6 +213,7 @@ public class GUI extends JFrame implements ListSelectionListener {
 
                 listModel.removeAllElements();
                 listModel.insertElementAt(filteredList.viewPrompts(prompt), 0);
+                prompts.filterPrompts();
             }
         }
     }

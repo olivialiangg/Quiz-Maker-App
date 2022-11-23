@@ -35,6 +35,7 @@ public class PromptList implements Writable {
     public void addPrompt(Prompt p) {
         if (!promptList.contains(p)) {
             promptList.add(p);
+            EventLog.getInstance().logEvent(new Event("Added prompt: " + p.getQuestion() + p.getAnswer()));
         }
     }
 
@@ -69,6 +70,22 @@ public class PromptList implements Writable {
         return count;
     }
 
+    public void filterPrompts() {
+        EventLog.getInstance().logEvent(new Event("Filtered the displayed prompts."));
+    }
+
+//    public PromptList filterPrompts(PromptList list) {
+//        PromptList filteredPromptsList = new PromptList("Your Filtered Quiz ");
+//
+//        for (Prompt prompt: list.getPromptList()) {
+//            if (prompt.getIsHard()) {
+//                filteredPromptsList.addPrompt(prompt);
+//            }
+//        }
+//
+//        return filteredPromptsList;
+//    }
+
     @Override
     public JSONObject toJason() {
         JSONObject json = new JSONObject();
@@ -84,10 +101,8 @@ public class PromptList implements Writable {
         for (Prompt p: promptList) {
             jsonArray.put(p.toJason());
         }
-
         return jsonArray;
     }
-
 }
 
 
