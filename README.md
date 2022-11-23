@@ -29,3 +29,16 @@ easy prompts only
 - You can locate my visual component by the splash screen image that is displayed before the application begins
 - You can save the state of my application by clicking the "Save Quiz" button
 - You can reload the state of my application by clicking the "Load Quiz" button
+
+## **Phase 4: Task 2**
+After adding two prompts, one that is hard (true) and another that is not hard (false), followed by filtering the
+prompts to only display the not hard prompts, the console printed this:
+
+Wed Nov 23 13:42:34 PST 2022
+Added prompt: What is 2+2? 4 true
+
+Wed Nov 23 13:42:40 PST 2022
+Added prompt: What is 1+1? 2 false
+
+Wed Nov 23 13:42:42 PST 2022
+Filtered list of prompts.
