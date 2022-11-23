@@ -1,9 +1,7 @@
 package ui;
 
+import model.*;
 import model.Event;
-import model.EventLog;
-import model.Prompt;
-import model.PromptList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -40,7 +38,8 @@ public class GUI extends JFrame implements ListSelectionListener {
     private JTextField answer;
     private JTextField difficulty;
 
-    private LogPrinter lp;
+    private EventLog el;
+
 
     // EFFECTS: sets up GUI
     public GUI() {
@@ -154,11 +153,18 @@ public class GUI extends JFrame implements ListSelectionListener {
 
 
     class ExitListener implements ActionListener {
+        private String log;
 
         // EFFECTS: quits application
         public void actionPerformed(ActionEvent e) {
             dispose();
-            System.out.println(lp.printLog(EventLog.getInstance()));
+            el = EventLog.getInstance();
+            log = "";
+            for (Event next: el) {
+                log = log + next.toString();
+            }
+
+            System.out.println(log);
         }
     }
 
