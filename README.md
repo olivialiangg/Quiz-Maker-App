@@ -31,7 +31,7 @@ easy prompts only
 - You can reload the state of my application by clicking the "Load Quiz" button
 
 ## **Phase 4: Task 2**
-After adding two prompts, one that is hard (true) and another that is not hard (false), followed by filtering the
+After adding two prompts, one that is hard (true) and another that is not hard (false), then filtering the
 prompts to only display the not hard prompts, the console printed this:
 
 Wed Nov 23 13:42:34 PST 2022 <br>

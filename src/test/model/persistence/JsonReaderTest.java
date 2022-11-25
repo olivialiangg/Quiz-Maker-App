@@ -1,8 +1,9 @@
-package persistence;
+package model.persistence;
 
 import model.Prompt;
 import model.PromptList;
 import org.junit.jupiter.api.Test;
+import persistence.JsonReader;
 
 import java.io.IOException;
 import java.util.List;

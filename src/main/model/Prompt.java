@@ -29,6 +29,7 @@ public class Prompt implements Writable {
 
     public boolean getIsHard() {
         return isHard;
+
     }
 
 

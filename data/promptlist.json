@@ -1,8 +1,15 @@
 {
     "name": "Your Quiz",
-    "promptList": [{
-        "question": "f",
-        "answer": "s",
-        "isHard": true
-    }]
+    "promptList": [
+        {
+            "question": "true",
+            "answer": "false",
+            "isHard": false
+        },
+        {
+            "question": "hi",
+            "answer": "bye",
+            "isHard": true
+        }
+    ]
 }

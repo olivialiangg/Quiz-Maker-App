@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -47,7 +48,6 @@ public class GUI extends JFrame implements ListSelectionListener {
     public GUI() {
 
         super("Your Quiz");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(500, 700));
         pack();
         setLocationRelativeTo(null);
@@ -162,7 +162,7 @@ public class GUI extends JFrame implements ListSelectionListener {
             dispose();
             el = EventLog.getInstance();
             log = "";
-            for (Event next: el) {
+            for (Event next : el) {
                 log = log + next.toString() + "\n\n";
             }
 
@@ -213,13 +213,11 @@ public class GUI extends JFrame implements ListSelectionListener {
         // MODIFIES: listModel
         // EFFECTS: only displays easy prompts
         public void actionPerformed(ActionEvent e) {
-            prompts.filterPrompts();
             filteredList = new PromptList("Your Filtered Quiz");
             for (Prompt prompt : prompts.getPromptList()) {
                 if (!prompt.getIsHard()) {
-                    filteredList.removeGivenPrompt(prompt);
+                    filteredList.removePrompt(prompt);
                 }
-
                 listModel.removeAllElements();
                 listModel.insertElementAt(filteredList.viewPrompts(prompt), 0);
             }

@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 
@@ -40,23 +41,25 @@ public class PromptList implements Writable {
                     + p.getQuestion() + " " + p.getAnswer() + " " + p.getIsHard() + " "));
         }
     }
-
-    public void filterPrompts() {
-        EventLog.getInstance().logEvent(new Event("Filtered list of prompts. "));
-    }
+//
+//    public void filterPrompts() {
+//        EventLog.getInstance().logEvent(new Event("Filtered list of prompts. "));
+//    }
 
     // REQUIRES: list of prompts cannot be empty
     // MODIFIES: this
     // EFFECTS: removes given prompt from list if it is in the list of prompts; otherwise do nothing
     public void removePrompt(Prompt p) {
+        EventLog.getInstance().logEvent(new Event("Filtered list of prompts. "));
         if (promptList.contains(p)) {
             promptList.remove(p);
         }
     }
 
-    public void removeGivenPrompt(Prompt p) {
-        promptList.remove(p);
-    }
+//    public void removeGivenPrompt(Prompt p) {
+//        EventLog.getInstance().logEvent(new Event("Filtered list of prompts. "));
+//        promptList.remove(p);
+//    }
 
     // EFFECTS: returns number of prompts in list
     public int totalPrompts() {

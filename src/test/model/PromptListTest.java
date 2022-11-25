@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -153,6 +154,7 @@ class PromptListTest {
         testPromptList.addPrompt(p3);
         assertEquals(2, testPromptList.totalHardPrompts());
     }
+
 
     @Test
     void testHashCode() {
