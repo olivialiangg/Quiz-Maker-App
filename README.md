@@ -45,4 +45,4 @@ Filtered list of prompts.
 
 ## **Phase 4: Task 3**
 If I had more time to work on my project I wouldn't refactor anything since I think my project does not have much 
-coupling and is not very complex.
+coupling and the classes that I have made have one distinct task.
